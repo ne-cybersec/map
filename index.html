@@ -610,6 +610,35 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .oped__caveat b { color: var(--ink-2); font-weight: 600; }
 
 /* ============================================================
+   TIMELINE
+   ============================================================ */
+.tl { padding-block: clamp(3rem, 7vw, 5rem); overflow: hidden; }
+.tl__head { margin-bottom: 1.6rem; }
+.tl__head h2 { font-size: clamp(1.6rem, 4vw, 2.6rem); margin: 0.4rem 0 0.8rem; }
+.tl__head p { color: var(--ink-2); max-width: 62ch; font-size: 0.95rem; text-wrap: pretty; }
+.tl__head p b { color: var(--ink); }
+.tl__scroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: var(--line) transparent; padding-bottom: 0.6rem; cursor: grab; }
+.tl__scroll.is-grab { cursor: grabbing; }
+.tl__scroll::-webkit-scrollbar { height: 6px; }
+.tl__scroll::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+.tl__track { display: flex; align-items: flex-start; width: max-content; padding: 0.4rem max(1.2rem, calc((100vw - var(--maxw)) / 2 + 1.2rem)) 0.2rem; }
+.tl__ev { flex: 0 0 168px; position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; background: none; padding: 0 0.5rem; }
+.tl__ev::after { content: ""; position: absolute; left: 0; right: 0; top: calc(1.8rem + 6px); height: 2px; background: var(--line-soft); z-index: 0; }
+.tl__ev:first-child::after { left: 50%; }
+.tl__ev:last-child::after { right: 50%; }
+.tl__year { font-family: var(--mono); font-weight: 700; font-size: 1.05rem; color: var(--c, var(--ink)); height: 1.8rem; line-height: 1.8rem; }
+.tl__dot { width: 14px; height: 14px; border-radius: 50%; background: var(--c, var(--ink-3)); box-shadow: 0 0 0 4px var(--bg), 0 0 10px var(--c); position: relative; z-index: 2; transition: transform 0.2s var(--ease-quint); }
+.tl__ev:hover .tl__dot, .tl__ev:focus-visible .tl__dot { transform: scale(1.4); }
+.tl__body { margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.3rem; }
+.tl__country { font-weight: 600; color: var(--ink); font-size: 0.95rem; transition: color 0.2s; }
+.tl__ev:hover .tl__country { color: var(--c); }
+.tl__scope { color: var(--ink-3); font-size: 0.76rem; line-height: 1.35; text-wrap: pretty; }
+.tl__tag { display: inline-flex; align-items: center; gap: 0.35rem; justify-content: center; margin-top: 0.25rem; font-family: var(--mono); font-size: 0.62rem; color: var(--ink-2); border: 1px solid var(--line); border-radius: 5px; padding: 0.12rem 0.4rem; }
+.tl__tag i { width: 6px; height: 6px; border-radius: 50%; }
+.tl__era { flex: 0 0 auto; align-self: stretch; display: flex; align-items: center; padding: 0 0.6rem; }
+.tl__era span { writing-mode: initial; font-family: var(--mono); font-size: 0.66rem; color: var(--ink-3); border: 1px dashed var(--line); border-radius: 999px; padding: 0.25rem 0.6rem; white-space: nowrap; }
+
+/* ============================================================
    RANKING TABLE
    ============================================================ */
 .ranking { padding-block: clamp(2rem, 5vw, 4rem); }
@@ -893,6 +922,20 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     </div>
   </section>
 
+  <!-- TIMELINE -->
+  <section class="tl" id="timeline">
+    <div class="wrap">
+      <div class="tl__head reveal">
+        <span class="eyebrow">Хронология</span>
+        <h2>Как мир пришёл к запретам</h2>
+        <p>От первого закона о детских данных (<b>США, COPPA, 1998</b>) до волны запретов 2024–2026. Прокрутите ленту вбок; нажмите событие — откроется карточка страны.</p>
+      </div>
+    </div>
+    <div class="tl__scroll" id="tl-scroll">
+      <div class="tl__track" id="tl-track"></div>
+    </div>
+  </section>
+
   <!-- QUOTE WALL -->
   <section class="quotes" id="quotes">
     <div class="wrap">
@@ -1026,7 +1069,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
           <div class="oped__fact"><span>«Единая Россия» — против запрета соцсетей до 14 лет; ставка на «развитие отечественных платформ», а доступ детей назван «внутрисемейным делом».</span> <a href="https://www.interfax.ru/russia/1090195" target="_blank" rel="noopener">Интерфакс ↗</a></div>
         </div>
         <blockquote class="oped__q">«Государству хочется иметь контролируемый национальный интернет… Очевидно, что пользователи будут этому сопротивляться — как минимум уходя в VPN».<cite>Александр Бахтин, инвестиционный стратег «Гарда Капитал» · <a href="https://www.forbes.ru/investicii/555300-igra-v-monopoliu-kak-blokirovki-whatsapp-i-telegram-pomogli-akciam-vk" target="_blank" rel="noopener">Forbes.ru ↗</a></cite></blockquote>
-        <p class="oped__caveat"><b>Честно оговоримся:</b> прямого тезиса «власти не запретят соцсети, потому что владеют VK» в источниках нет — это наша интерпретация фактов. Есть и контраргумент: продвижение MAX власти объясняют безопасностью и цифровым суверенитетом, а не вытеснением конкурентов.</p>
+        <p class="oped__caveat"><b>Честно оговоримся:</b> прямого тезиса «власти не запретят соцсети, потому что владеют VK» в источниках нет — это наша интерпретация фактов.</p>
       </div>
     </div>
   </section>
@@ -1862,6 +1905,33 @@ function renderCountryVoices(c){
   const step=()=>{ const c=track.querySelector('.ruqc'); return c ? c.getBoundingClientRect().width+16 : 320; };
   document.getElementById('ruq-prev').onclick=()=>track.scrollBy({left:-step(),behavior:'smooth'});
   document.getElementById('ruq-next').onclick=()=>track.scrollBy({left:step(),behavior:'smooth'});
+})();
+
+/* ---------------- TIMELINE ---------------- */
+(function initTimeline(){
+  const track=document.getElementById('tl-track');
+  const scroll=document.getElementById('tl-scroll');
+  if(!track) return;
+  const ord={enacted:0,proposed:1,reco:2,discussion:3};
+  const evs=[...COUNTRIES].sort((a,b)=> a.year-b.year || ord[a.status]-ord[b.status] || a.ru.localeCompare(b.ru,'ru'));
+  track.innerHTML=evs.map(c=>{
+    const col=colorFor(c), st=STATUS[c.status]||{ru:'',color:'var(--ink-3)'};
+    return `<button class="tl__ev" data-key="${c.key}" style="--c:${col}" aria-label="${esc(c.ru)}, ${c.year}, ${st.ru}">
+      <span class="tl__year">${c.year}</span>
+      <span class="tl__dot"></span>
+      <span class="tl__body">
+        <span class="tl__country">${esc(c.ru)}</span>
+        <span class="tl__scope">${esc(c.scope)}</span>
+        <span class="tl__tag"><i style="background:${st.color}"></i>${st.ru}</span>
+      </span>
+    </button>`;
+  }).join('');
+  let down=false,sx=0,sl=0,moved=false;
+  track.querySelectorAll('.tl__ev').forEach(b=>b.addEventListener('click',()=>{ if(!moved) openDrawer(b.dataset.key); }));
+  scroll.addEventListener('pointerdown',e=>{ down=true; moved=false; sx=e.clientX; sl=scroll.scrollLeft; scroll.classList.add('is-grab'); });
+  scroll.addEventListener('pointermove',e=>{ if(!down)return; const dx=e.clientX-sx; if(Math.abs(dx)>4) moved=true; scroll.scrollLeft=sl-dx; });
+  const up=()=>{ down=false; scroll.classList.remove('is-grab'); };
+  scroll.addEventListener('pointerup',up); scroll.addEventListener('pointerleave',up); scroll.addEventListener('pointercancel',up);
 })();
 
 /* ---------------- REVEAL ON SCROLL ---------------- */
