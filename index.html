@@ -1376,6 +1376,16 @@ const QUOTES = [
   {author:'Филипп Вампфлер', role:'учитель старших классов, эксперт по цифре', country:'Switzerland', stance:'critic', q:'Запрет — это быстрое и простое решение, которое позволяет уйти от более сложной проблемы.', src:'https://www.swissinfo.ch/eng/education/phone-bans-in-schools-why-swiss-teachers-are-sceptical/91358723', srcName:'swissinfo'},
   {author:'Тала Абдулрахман', role:'ученица 9 класса, 15 лет', country:'Saudi Arabia', stance:'child', q:'Некоторые одноклассницы злые и любят высмеивать других. Если нельзя предотвратить травлю — пусть хотя бы не нарушают нашу частную жизнь.', src:'https://www.arabnews.com/node/1920591/saudi-arabia', srcName:'Arab News'},
   {author:'Леонард', role:'ученик лицея, 16 лет, Париж', country:'France', stance:'critic', q:'Признаюсь, если бы это меня касалось, меня бы это немного разозлило. Эта мера наверняка достанет немало молодёжи.', src:'https://www.franceinfo.fr/internet/reseaux-sociaux/temoignages-interdire-les-reseaux-sociaux-aux-moins-de-15-ans-on-a-demande-a-des-adolescents-ce-qu-ils-en-pensaient_7716667.html', srcName:'France Info'},
+  {author:'Райли Аллен', role:'школьник, 15 лет, ферма в Юж. Австралии', country:'Australia', stance:'critic', q:'Не думаю, что для нас последствия будут позитивными. У нас тут и так немного способов связаться друг с другом.', src:'https://www.post-gazette.com/news/world/2025/12/09/australia-social-media-ban-friends/stories/202512090094', srcName:'AP'},
+  {author:'Калам', role:'школьник 5 класса, 11 лет, Бекаси', country:'Indonesia', stance:'child', q:'Если я больше не смогу играть в Roblox, мне будет немного грустно.', src:'https://global.chinadaily.com.cn/a/202604/08/WS69d5b20aa310d6866eb4228f.html', srcName:'China Daily / AFP'},
+  {author:'Ава Хавидич', role:'старшеклассница, 18 лет, Флорида', country:'United States of America', stance:'critic', q:'Когда что-то запрещают, для учеников это иногда как зелёный свет: «ладно, а как мне это обойти, как всё равно этим пользоваться?»', src:'https://www.edweek.org/leadership/new-florida-law-aims-to-get-kids-off-social-media-will-it-work/2024/03', srcName:'Education Week'},
+  {author:'Фламандские школьники (13–14 лет)', role:'реакция подростков, Бельгия', country:'Belgium', stance:'child', q:'Они отнимают у нас право.', src:'https://www.vrt.be/vrtnws/nl/2025/05/07/verbod-sociale-media-reacties-jongeren/', srcName:'VRT NWS'},
+  {author:'Маттео Ланчини', role:'психолог и психотерапевт, Италия', country:'Italy', stance:'critic', q:'В Австралии говорят, что это работает, но исследования делают на родителях, а не на детях. Запретить соцсети невозможно — это лозунг ради популярности.', src:'https://www.cdt.ch/news/mondo/divieto-dei-social-dovremmo-piuttosto-proteggere-i-figli-dagli-adulti-431916', srcName:'Corriere del Ticino'},
+  {author:'Сунь Цзецюн', role:'мать 12-летнего сына, Хэйлунцзян', country:'China', stance:'critic', q:'«Подростковый режим» в отдельных приложениях легко обойти — достаточно зайти под другим аккаунтом или переустановить приложение.', src:'https://www.sixthtone.com/news/1013463', srcName:'Sixth Tone'},
+  {author:'Мария Пилар Маллада', role:'педиатр, Сарагоса', country:'Spain', stance:'support', q:'Раньше ребёнок, страдавший от травли, переживал её с девяти до пяти, с понедельника по пятницу. Теперь это 24 часа в сутки, семь дней в неделю.', src:'https://www.publico.es/politica/control-parental-redes-16-penas-duras-pedofilos-espana-busca-proteger-menores-internet.html', srcName:'Público'},
+  {author:'Николета', role:'школьница, 14 лет, Греция', country:'Greece', stance:'child', q:'Мы выросли с соцсетями, а теперь нам вдруг говорят «закройте их». Так это не работает. Общий запрет для детей — не считаю, что это хорошо.', src:'https://www.news247.gr/ellada/rotisame-tous-kato-ton-15-ti-lene-gia-tin-apagorefsi-ton-social-media/', srcName:'News 24/7'},
+  {author:'Лола Фишер', role:'16 лет, соосн. Gen-Z Aotearoa', country:'New Zealand', stance:'child', q:'Мы унаследуем нынешние решения — так почему бы не обсуждать их с нами? Часто именно у молодёжи есть решения проблем.', src:'https://www.rnz.co.nz/national/programmes/checkpoint/audio/2018986796/pm-needs-to-speak-with-gen-z-on-social-media-ban-adviser', srcName:'RNZ'},
+  {author:'Кейра Бакли', role:'старшеклассница, Онтарио', country:'Canada', stance:'child', q:'Соцсети были единственным способом общаться во время COVID — так я завела друзей. Не думаю, что ответ — запретить их совсем.', src:'https://www.cbc.ca/news/canada/london/london-ontario-canada-social-media-ban-reaction-9.7229111', srcName:'CBC News'},
 ];
 
 const COUNTRIES = [
@@ -1566,6 +1576,22 @@ const LAWLINKS = {
   'Switzerland':{n:'Motion 26.3074 (ограничение смартфонов до 12 лет)',u:'https://www.parlament.ch/fr/ratsbetrieb/suche-curia-vista/geschaeft?AffairId=20263074'},
   'Saudi Arabia':{n:'PDPL + Политика SDAIA о данных детей',u:'https://dgp.sdaia.gov.sa/wps/portal/pdp/home'},
   'France':{n:'Закон №2023-566 (цифровое совершеннолетие 15 лет)',u:'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047799533'},
+  'Australia':{n:'Online Safety Amendment (Social Media Minimum Age) Act 2024',u:'https://www.legislation.gov.au/C2024A00127/asmade'},
+  'Malaysia':{n:'Online Safety Act 2025 + Кодекс MCMC (до 16)',u:'https://www.mcmc.gov.my/en/onsa/under-16'},
+  'Indonesia':{n:'Постановление Правительства №17/2025 (PP Tunas)',u:'https://peraturan.bpk.go.id/Details/316698/pp-no-17-tahun-2025'},
+  'United States of America':{n:'COPPA (правило FTC) + законы штатов',u:'https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa'},
+  'Belgium':{n:'Возраст цифрового согласия 13 лет (GDPR/APD)',u:'https://www.autoriteprotectiondonnees.be/citoyen/rgpd-la-limite-d-age-de-13-ans-correspond-a-la-pratique-numerique'},
+  'Italy':{n:'Кодекс о защите перс. данных, ст. 2-quinquies (14 лет)',u:'https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9536089'},
+  'Brazil':{n:'Цифровой ECA — Закон №15.211/2025',u:'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15211.htm'},
+  'China':{n:'Руководство о «режиме для несовершеннолетних» (CAC, 2024)',u:'https://www.cac.gov.cn/2024-11/15/c_1733364304722026.htm'},
+  'Norway':{n:'Законопроект о пороге 15 лет (в Стортинг, 2026)',u:'https://www.regjeringen.no/en/whats-new/norwegian-social-media-age-restrictions-law-on-track-to-be-introduced-this-year-this-is-how-the-age-limit-for-social-media-will-work/id3157276/'},
+  'Denmark':{n:'Политическое соглашение о запрете до 15 (2025)',u:'https://www.digmin.dk/digitalisering/nyheder/nyhedsarkiv/2025/nov/ny-politisk-aftale'},
+  'Spain':{n:'Проект органического закона (возраст 14→16)',u:'https://www.lamoncloa.gob.es/consejodeministros/referencias/Paginas/2025/20250325-referencia-consejo-de-ministros.aspx'},
+  'Greece':{n:'Kids Wallet (Gov.gr) + запрет до 15 с 2027',u:'https://www.gov.gr/en/ipiresies/polites-kai-kathemerinoteta/stoikheia-polite-kai-tautopoietika-eggrapha/KidsWallet'},
+  'United Kingdom':{n:'Online Safety Act 2023 (+ план запрета до 16)',u:'https://www.legislation.gov.uk/ukpga/2023/50/contents'},
+  'Germany':{n:'Возраст цифрового согласия 16 (GDPR); запрета нет',u:'https://www.bmbfsfj.bund.de/bmbfsfj/aktuelles/pressemitteilungen/kinder-und-jugendliche-in-der-digitalen-welt-besser-schuetzen-und-staerken-290372'},
+  'Canada':{n:'Online Harms Act (билль C-63, не принят)',u:'https://www.parl.ca/legisinfo/en/bill/44-1/c-63'},
+  'New Zealand':{n:'Social Media (Age-Restricted Users) Bill (на паузе)',u:'https://www.legislation.govt.nz/bill/member/2025/0216/latest/whole.html'},
 };
 
 // Позиция местных СМИ по вопросу запрета (характеристика редакционной линии, не дословная цитата)
@@ -1591,6 +1617,16 @@ const MEDIA = {
   'Switzerland':{o:'St. Galler Tagblatt',t:'Первый крупный кантон уже ввёл запрет смартфонов — чего ещё ждут остальные?',u:'https://www.tagblatt.ch/leben/schulen-erster-grosser-kanton-macht-es-vor-fuenf-gruende-warum-es-hoechste-zeit-fuer-ein-smartphone-verbot-ist-ld.2779726'},
   'Saudi Arabia':{o:'Arab News',t:'Детство в цифровую эпоху под угрозой: соцсети формируют развитие и эмоции детей, но всё чаще превращаются в цифровой ящик Пандоры.',u:'https://www.arabnews.com/node/2634113'},
   'France':{o:'Lexbase (мнение)',t:'Запретить соцсети детям до 15 — Франция прокладывает амбициозный путь: подход оценивается как смелый и образцовый.',u:'https://www.lexbase.fr/article-juridique/131471185-point-de-vue-interdire-les-reseaux-sociaux-aux-moins-de-15-ans-la-france-trace-une-voie-ambitieuse'},
+  'Australia':{o:'Crikey',t:'Колумнист, написавший 44 000 слов о проблемах подросткового запрета соцсетей, признаётся: «очень надеюсь, что я ошибаюсь».',u:'https://www.crikey.com.au/2025/12/10/cam-wilson-teen-social-media-ban/'},
+  'Malaysia':{o:'Malay Mail',t:'Запрет до 16 — не самое трудное; трудно заставить его работать: подростки не исчезают, а обходят правила через чужие аккаунты.',u:'https://www.malaymail.com/news/what-you-think/2025/12/27/the-under-16-social-media-ban-isnt-the-hard-part-making-it-work-is-galvin-lee/203365'},
+  'Indonesia':{o:'The Jakarta Post',t:'Безопасность детей в сети требует большего, чем возрастное правило: без независимого аудита платформы выберут формальные решения.',u:'https://www.thejakartapost.com/opinion/2026/02/24/indonesias-online-child-safety-needs-more-than-an-age-rule.html'},
+  'United States of America':{o:'The Washington Post (редколлегия)',t:'Вред для детей реален, но государственные возрастные запреты не работают — государство не защитит детей лучше их собственных родителей.',u:'https://www.washingtonpost.com/opinions/2026/02/17/social-media-bans-kids/'},
+  'Italy':{o:'Il Corriere Nazionale',t:'Запрещать соцсети несовершеннолетним бесполезно: запрет не воспитывает.',u:'https://www.corrierenazionale.net/2026/02/20/vietare-i-social-media-ai-minori-non-serve-perche-il-divieto-non-educa/'},
+  'Norway':{o:'Nationen',t:'Снижение травли детей в сети — достаточная причина ввести возрастной порог; Стортингу следует принять предложение правительства.',u:'https://www.nationen.no/pa-hoy-tid-med-aldersgrense-for-sosiale-medier/o/5-148-897248'},
+  'Greece':{o:'Naftemporiki',t:'Запрет соцсетей детям до 15: почему запрет не решает проблему.',u:'https://www.naftemporiki.gr/opinion/2099570/apagoreysi-social-media-gia-paidia-kato-ton-15-giati-i-apagoreysi-den-lynei-to-provlima/'},
+  'Germany':{o:'taz',t:'Эксперты совещались с осени 2025 и так и не ответили, нужен ли возрастной запрет: проблему просто отложили.',u:'https://taz.de/Ergebnis-der-Social-Media-Kommission/!6188589/'},
+  'Canada':{o:'The Globe and Mail (редколлегия)',t:'Было бы прекрасно отнять детство у соцсетевых гигантов простым запретом. Увы, реальная защита детей куда сложнее.',u:'https://www.theglobeandmail.com/opinion/editorials/article-social-media-ban-regulation-kids-children/'},
+  'New Zealand':{o:'The New Zealand Herald',t:'Соцсети могут вредить подросткам, но запрет — не выход: возраст в сети почти невозможно подтвердить, а VPN обойдёт барьер.',u:'https://www.nzherald.co.nz/nz/editorial-social-media-may-hurt-teenagers-but-banning-it-is-not-the-answer/FZEO3PZWZJCKBHTDYNAT6ZKBFQ/'},
 };
 
 /* ---------------- HERO STATS ---------------- */
