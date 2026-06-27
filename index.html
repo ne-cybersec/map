@@ -60,6 +60,7 @@
 
   --neutral-reco: oklch(0.560 0.020 264);
   --status-discussion: oklch(0.660 0.100 300);
+  --no-age: oklch(0.620 0.028 230);
 
   /* Type */
   --sans: 'Onest', system-ui, sans-serif;
@@ -331,6 +332,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .lkey .sw--prop { border: 1.5px dashed oklch(0.75 0.02 264); background: oklch(0.75 0.02 264 / 0.28); }
 .lkey .sw--reco { border: 1.5px dotted var(--neutral-reco); background: transparent; }
 .lkey .sw--disc { border: 1.5px dashed var(--status-discussion); background: color-mix(in oklch, var(--status-discussion) 18%, transparent); }
+.lkey .sw--noage { background: var(--no-age); }
 
 /* ============================================================
    DETAIL DRAWER
@@ -785,15 +787,15 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       <div class="stats" aria-label="Ключевые цифры">
         <div class="stat">
           <span class="stat__num is-ban" data-count="0" id="stat-ban">0</span>
-          <span class="stat__label">страны, где прямой запрет <b>уже действует</b><span>Австралия, Малайзия, Индонезия</span></span>
+          <span class="stat__label">страны: прямой запрет соцсетей <b>принят</b><span>Австралия, Турция, ОАЭ, Малайзия, Индонезия</span></span>
         </div>
         <div class="stat">
           <span class="stat__num is-prop" data-count="0" id="stat-prop">0</span>
-          <span class="stat__label">стран <b>готовят запрет</b> закон<span>в основном Европа и Канада</span></span>
+          <span class="stat__label">стран — закон <b>на рассмотрении</b><span>Европа, Азия, Латинская Америка</span></span>
         </div>
         <div class="stat">
           <span class="stat__num is-total" data-count="0" id="stat-total">0</span>
-          <span class="stat__label">юрисдикций <b>на карте</b><span>запреты, согласие, рекомендации</span></span>
+          <span class="stat__label">юрисдикций <b>в подборке</b><span>запреты, согласие, школы, споры</span></span>
         </div>
       </div>
     </div>
@@ -807,7 +809,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
           <span class="eyebrow">Интерактивная карта</span>
           <h2>Возрастной порог по странам</h2>
         </div>
-        <p>Цвет — возраст, с которого снимаются ограничения. Заливка — закон уже действует; пунктир — на рассмотрении; контур — рекомендация; фиолетовый — закона нет, идут споры (Россия).</p>
+        <p>Цвет — возраст, с которого снимаются ограничения; серый — мера без возрастного порога (школы, классификация). Заливка — закон действует; пунктир — на рассмотрении; контур — рекомендация; фиолетовый — закона нет, идут споры.</p>
       </div>
 
       <div class="controls" id="filters" role="group" aria-label="Фильтр по статусу">
@@ -843,6 +845,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
             <span class="lkey"><span class="sw sw--prop"></span>На рассмотрении</span>
             <span class="lkey"><span class="sw sw--reco"></span>Рекомендация</span>
             <span class="lkey"><span class="sw sw--disc"></span>Закона нет · спорят</span>
+            <span class="lkey"><span class="sw sw--noage"></span>Без возрастного порога</span>
           </div>
         </div>
       </div>
@@ -882,9 +885,9 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       </div>
 
       <div class="callout reveal">
-        <div class="callout__big">3</div>
-        <p>Реально работающий прямой запрет есть лишь в трёх странах.
-          <span>Австралия, Малайзия, Индонезия. Вся Европа — Норвегия, Дания, Испания, Греция, Франция, Великобритания — пока только готовит законы. Громкие заголовки опережают вступление в силу на годы.</span>
+        <div class="callout__big" id="callout-ban">5</div>
+        <p>Стран, где прямой возрастной запрет соцсетей уже принят.
+          <span>Австралия, Турция, ОАЭ, Малайзия, Индонезия. Но в большинстве мира пока действуют школьные запреты телефонов, проверка возраста на платформах и политические споры — а не «жёсткий» запрет по возрасту. Громкие заголовки опережают вступление в силу на годы.</span>
         </p>
       </div>
     </div>
@@ -1141,11 +1144,16 @@ const STATUS = {
 };
 const REGIME = {
   ban:'Прямой запрет', consent:'Родительское согласие', time:'Лимиты экранного времени',
-  reco:'Рекомендация (без закона)', discussion:'Возрастного закона нет; идут обсуждения'
+  reco:'Рекомендация (без закона)', discussion:'Возрастного закона нет; идут обсуждения',
+  platform:'Регулирование платформ / классификация', school:'Запрет телефонов в школах'
 };
 
-// возраст может отсутствовать (Россия): закон не задаёт порога
-function colorFor(c){ return c.status==='discussion' ? getCss('--status-discussion') : AGE_COLORS[c.age]; }
+// возраст может отсутствовать: школьные запреты, классификация контента, обсуждения
+function colorFor(c){
+  if(c.status==='discussion') return getCss('--status-discussion');
+  if(c.age==null) return getCss('--no-age');
+  return AGE_COLORS[c.age];
+}
 function ageText(c){ return c.age==null ? '—' : c.age; }
 
 /* ---------------- QUOTES (реальные высказывания со ссылками) ---------------- */
@@ -1268,6 +1276,31 @@ const QUOTES = [
   {author:'Аадхаван Сараванан', role:'школьник, 15 лет', country:'Malaysia', stance:'child', q:'Соцсети — это роскошь, а не необходимость.', src:'https://www.nbcnews.com/world/asia/malaysia-enforces-ban-social-media-accounts-children-younger-16-rcna347823', srcName:'NBC News'},
   {author:'Шон Хью', role:'отец двоих детей', country:'Malaysia', stance:'critic', q:'Боюсь, что резкое отключение от соцсетей подтолкнёт детей искать нерегулируемые способы обойти эти правила.', src:'https://www.nbcnews.com/world/asia/malaysia-enforces-ban-social-media-accounts-children-younger-16-rcna347823', srcName:'NBC News'},
   {author:'Фелипе Брессаним («Felca»)', role:'блогер, кампания за защиту детей в сети', country:'Brazil', stance:'support', q:'Если бы было искреннее уважение к детям, сами соцсети бы адаптировались.', src:'https://www.terra.com.br/noticias/educacao/se-houvesse-respeito-genuino-pelas-criancas-as-proprias-redes-sociais-se-adaptariam-diz-felca,7dbf4b007968ab78b78c16ee2803ad4dfycbwugj.html', srcName:'Terra'},
+
+  // — голоса из расширенной выборки стран —
+  {author:'Реджеп Тайип Эрдоган', role:'президент Турции', country:'Turkey', stance:'official', q:'Мы живём во времена, когда некоторые приложения развращают умы наших детей, а платформы соцсетей, прямо говоря, превратились в выгребные ямы.', src:'https://www.aljazeera.com/news/2026/4/23/turkiye-mps-pass-bill-to-restrict-social-media-use-for-children-under-15', srcName:'Al Jazeera'},
+  {author:'Постановление Кабмина №106', role:'нормативный акт ОАЭ', country:'United Arab Emirates', stance:'official', q:'Согласие родителей не является основанием для освобождения от запретов, установленных настоящим постановлением.', src:'https://gulfnews.com/uae/how-uae-social-media-ban-for-children-under-15-will-work-everything-you-must-know-1.500578938', srcName:'Gulf News'},
+  {author:'Данг Тхи Хюэ', role:'активистка, блогер', country:'Vietnam', stance:'critic', q:'Указ 147 будет использоваться для публичного подавления тех, кто придерживается иных взглядов.', src:'https://www.voanews.com/a/sweeping-vietnam-internet-law-comes-into-force/7913333.html', srcName:'VOA'},
+  {author:'Ашвини Вайшнау', role:'министр электроники и ИТ Индии', country:'India', stance:'official', q:'Мы будем дорабатывать правила, чтобы дать детям силу технологий, одновременно защищая их от множества вредных воздействий.', src:'https://inc42.com/buzz/dpdp-rules-will-be-refined-further-to-save-children-from-harms-in-digital-space-vaishnaw/', srcName:'Inc42'},
+  {author:'Садаф Хан', role:'сооснователь Media Matters for Democracy', country:'Pakistan', stance:'critic', q:'Защита детей важна, но тотальные запреты создают опасный прецедент. Нужны цифровая грамотность и консультации с экспертами, а не расплывчатые законы.', src:'https://digitalrightsmonitor.pk/social-media-ban-under-16-pakistan-privacy-rights/', srcName:'Digital Rights Monitor'},
+  {author:'Шервин Гатчалян', role:'председатель Сената Филиппин', country:'Philippines', stance:'official', q:'Многие подростки становятся зависимыми от соцсетей и жестоких игр, и исследования показывают, что это может влиять на их мышление.', src:'https://www.philstar.com/headlines/2026/06/24/2537502/gatchalian-rejects-lower-criminal-liability-age-backs-social-media-ban-minors', srcName:'Philippine Star'},
+  {author:'Нив Ходнетт', role:'комиссар по онлайн-безопасности, Ирландия', country:'Ireland', stance:'official', q:'Принятие Кодекса онлайн-безопасности кладёт конец эпохе саморегулирования социальных сетей.', src:'https://www.cnam.ie/coimisiun-na-mean-adopts-final-online-safety-code/', srcName:'Coimisiún na Meán'},
+  {author:'Хелена Фрилингсдорф', role:'психиатр, Управление общественного здравоохранения Швеции', country:'Sweden', stance:'support', q:'Дети подвержены влиянию не только того, что говорят взрослые, но и того, что взрослые делают. Поэтому небольшие изменения в быту могут иметь значение.', src:'https://www.thelocal.se/20260602/public-health-agency-of-sweden-tells-parents-to-put-away-their-phones', srcName:'The Local'},
+  {author:'Кристоф Видеркер', role:'министр образования Австрии', country:'Austria', stance:'official', q:'Я хочу поддержать администрации школ и учителей чёткой общенациональной нормой.', src:'https://www.vienna.at/mobile-phone-ban-in-schools-these-rules-apply-from-may/9370184', srcName:'VIENNA.AT'},
+  {author:'Дональд Туск', role:'премьер-министр Польши', country:'Poland', stance:'official', q:'Наша единственная цель — защитить детей от зависимости и вредного контента, который сеет хаос в их умах и эмоциях.', src:'https://notesfrompoland.com/2026/06/02/polish-government-approves-primary-school-phone-ban-and-stronger-porn-age-checks/', srcName:'Notes from Poland'},
+  {author:'Томас Миндер', role:'президент Ассоциации директоров школ Швейцарии', country:'Switzerland', stance:'support', q:'Соцсети следует запретить для несовершеннолетних. Мы защищаем детей от сигарет и алкоголя — почему не от соцсетей?', src:'https://www.thelocal.ch/20251010/will-switzerland-move-to-ban-social-media-for-children', srcName:'The Local (CH)'},
+  {author:'Фернанду Алешандре', role:'министр образования Португалии', country:'Portugal', stance:'official', q:'В прошлом году мы рекомендовали запрет телефонов, а теперь подготовили его для первого и второго циклов — он касается и государственных, и частных школ.', src:'https://www.theportugalnews.com/news/2025-07-04/government-approves-ban-on-phones-in-school/99135', srcName:'The Portugal News'},
+  {author:'Андрей Бабиш', role:'премьер-министр Чехии', country:'Czechia', stance:'official', q:'Я за, потому что специалисты говорят, что это страшно вредно для детей. Мы должны защитить наших детей.', src:'https://www.eduin.cz/clanky/premier-chce-po-vzoru-francie-zakazat-socialni-site-pro-deti-mladsi-15-let-cast-odborniku-mu-v-tom-oponuje/', srcName:'EDUin'},
+  {author:'Бенце Ретвари', role:'госсекретарь МВД Венгрии', country:'Hungary', stance:'official', q:'Всё больше исследований показывают, что неограниченное использование телефонов в школах негативно влияет на внимание и успеваемость учеников.', src:'https://hungarytoday.hu/ban-on-mobile-phones-in-schools-takes-effect-from-today/', srcName:'Hungary Today'},
+  {author:'Николета Паулюк', role:'сенатор, инициатор законопроекта, Румыния', country:'Romania', stance:'official', q:'Если офлайн совершеннолетие наступает в 18, то онлайн — в 16. Мы не запрещаем детям интернет, но он должен сопровождаться двойным фильтром.', src:'https://www.romania-insider.com/draft-bill-romania-minimum-age-social-media-jun-2025', srcName:'Romania Insider'},
+  {author:'Эди Рама', role:'премьер-министр Албании', country:'Albania', stance:'official', q:'Мы на год выгоним этого хулигана из нашего двора.', src:'https://en.hespress.com/98925-albania-shuts-down-tiktok-at-least-for-a-year-pm.html', srcName:'AFP'},
+  {author:'Иса Зарепур', role:'министр связи Ирана', country:'Iran', stance:'official', q:'Нигде в мире дети не были так не защищены в интернете, как в Иране… Даже у Google есть Safe Search.', src:'https://filter.watch/english/2022/11/04/part-one-childrens-internet-and-digital-rights-in-iran-policies-and-legislations/', srcName:'Filterwatch'},
+  {author:'Йоав Киш', role:'министр образования Израиля', country:'Israel', stance:'official', q:'Мы даём детям возможность снова по-настоящему общаться друг с другом, уменьшить отвлекающие факторы — без экранов.', src:'https://www.timesofisrael.com/cellphones-to-be-banned-from-elementary-schools-nationwide-starting-february/', srcName:'Times of Israel'},
+  {author:'Маурисио Кури', role:'губернатор штата Керетаро, Мексика', country:'Mexico', stance:'support', q:'Это очень тревожная тема, которая может стоить детям жизни — когда ребёнок хочет умереть, потому что не дотягивает до стандартов, которые видит в соцсетях.', src:'https://www.cronicaregional.com.mx/queretaro/mauricio-kuri-propone-prohibir-redes-sociales-a-menores-de-14-anos-en-queretaro', srcName:'Crónica Regional'},
+  {author:'Мерседес Мигель', role:'министр образования города Буэнос-Айрес', country:'Argentina', stance:'official', q:'Объявляем классы свободными от мобильных телефонов и личных устройств на всех трёх уровнях образования города.', src:'https://www.infobae.com/educacion/2026/03/05/caba-avanza-con-la-prohibicion-del-celular-en-la-escuela-ya-no-se-podra-usar-en-la-secundaria/', srcName:'Infobae'},
+  {author:'Солли Малатси', role:'министр связи и цифровых технологий ЮАР', country:'South Africa', stance:'critic', q:'Всегда есть соблазн при любой проблеме сказать: «давайте введём запреты». Но без достаточных механизмов мы получим лишь косметические меры.', src:'https://www.ewn.co.za/2026/02/10/minister-malatsi-weighs-online-safety-guardrails-for-sa-as-global-under-16-social-media-bans-gather-pace/', srcName:'EWN'},
+  {author:'Евгений Кочетов', role:'вице-министр культуры и информации Казахстана', country:'Kazakhstan', stance:'official', q:'Норма о том, что детям до 16 лет будет ограничена регистрация. Механизмы не оговорены… В Парламент этот законопроект ещё не поступил.', src:'https://tengrinews.kz/kazakhstan_news/kazahstane-vvedut-zapret-sotsseti-detyam-16-let-novyie-599666/', srcName:'Tengrinews'},
+  {author:'Лайло Файзимуродова', role:'Нацагентство соцзащиты Узбекистана', country:'Uzbekistan', stance:'critic', q:'Я против запрета использования социальных сетей детьми и считаю такую меру радикальной и неуместной.', src:'https://www.gazeta.uz/ru/2026/02/02/social-networks-and-children/', srcName:'Gazeta.uz'},
 ];
 
 const COUNTRIES = [
@@ -1334,6 +1367,95 @@ const COUNTRIES = [
   {key:"Russia", ru:"Россия", age:null, status:"discussion", regime:"discussion", year:2026, scope:"Возрастного закона нет; запрет телефонов на уроках",
     desc:"Закона о минимальном возрасте для соцсетей нет: 152-ФЗ не задаёт возраст «цифрового согласия», а «14» выводится из Гражданского кодекса. VK возраст не проверяет — он указывается на честном слове. Зато с 1 сентября 2024 действует запрет телефонов на уроках (618-ФЗ), а детей ведут в госэкосистему (Сферум, мессенджер MAX). В Госдуме обсуждают запрет до 14 и верификацию через Госуслуги, но официально заявляют, что запрет не разрабатывают. Подробный разбор — в блоке ниже.",
     src:"https://tass.ru/politika/25990565", srcName:"ТАСС: Дума не разрабатывает запрет"},
+
+  // — расширенная выборка стран —
+  {key:"Turkey", ru:"Турция", age:15, status:"enacted", regime:"ban", year:2026, scope:"Запрет соцсетей до 15 лет",
+    desc:"22–23 апреля 2026 парламент принял закон, запрещающий детям до 15 лет заводить аккаунты в соцсетях; для 15–17 лет — родительский контроль и проверка возраста. Опубликован 1 мая 2026, профильные нормы вступают в силу через полгода. Принятие ускорила школьная стрельба в Кахраманмараше.",
+    src:"https://www.aljazeera.com/news/2026/4/23/turkiye-mps-pass-bill-to-restrict-social-media-use-for-children-under-15", srcName:"Al Jazeera"},
+  {key:"United Arab Emirates", ru:"ОАЭ", age:15, status:"enacted", regime:"ban", year:2026, scope:"Запрет соцсетей до 15 лет",
+    desc:"Постановление Кабмина №106 от 18 июня 2026 запрещает детям до 15 лет вести личные аккаунты в соцсетях; 15–16 лет — только с усиленной защитой. Согласие родителей не отменяет запрет, самодекларация возраста не принимается — нужна реальная проверка.",
+    src:"https://gulfnews.com/uae/how-uae-social-media-ban-for-children-under-15-will-work-everything-you-must-know-1.500578938", srcName:"Gulf News"},
+  {key:"Vietnam", ru:"Вьетнам", age:18, status:"enacted", regime:"time", year:2024, scope:"Указ 147: лимиты времени и верификация",
+    desc:"Указ №147 (в силе с 25 декабря 2024) ограничивает детей до 18: не более 60 минут за игровую сессию и 180 минут в день; регистрация игр до 16 — по данным родителя, все соцсети — с верификацией по телефону/удостоверению. На практике соблюдение слабое.",
+    src:"https://www.voanews.com/a/sweeping-vietnam-internet-law-comes-into-force/7913333.html", srcName:"VOA"},
+  {key:"India", ru:"Индия", age:18, status:"enacted", regime:"consent", year:2025, scope:"DPDP: согласие родителей до 18 лет",
+    desc:"Закон DPDP и Правила (нотифицированы 13 ноября 2025) требуют «проверяемого согласия» родителя на обработку данных любого пользователя младше 18 лет; запрещены отслеживание, поведенческий мониторинг и таргетированная реклама детям. Полное исполнение — к маю 2027.",
+    src:"https://www.livelaw.in/top-stories/digital-personal-data-protection-rules-2025-notified-309928", srcName:"LiveLaw"},
+  {key:"Saudi Arabia", ru:"Саудовская Аравия", age:13, status:"enacted", regime:"consent", year:2023, scope:"PDPL: согласие родителей до 13 лет",
+    desc:"Закон о защите персональных данных (в силе с 14 сентября 2023) определяет «ребёнка» как лицо младше 13 и требует согласия родителя на обработку его данных, ограничивая профилирование и маркетинг. Отдельного возрастного запрета на соцсети нет.",
+    src:"https://practiceguides.chambers.com/practice-guides/data-protection-privacy-2026/saudi-arabia", srcName:"Chambers 2026"},
+  {key:"Taiwan", ru:"Тайвань", age:18, status:"enacted", regime:"time", year:2015, scope:"Экранное время: штраф родителям",
+    desc:"Поправка 2015 к Закону о защите прав детей (ст. 43) запрещает детям до 18 «непрерывно использовать устройства неразумное время» во вред здоровью; родителей можно оштрафовать до 50 000 TWD. Норма расплывчата и почти не применяется.",
+    src:"https://time.com/3682621/this-country-just-made-it-illegal-to-give-kids-too-much-screen-time/", srcName:"TIME"},
+  {key:"South Korea", ru:"Южная Корея", age:null, status:"proposed", regime:"platform", year:2026, scope:"Проверка возраста и алгоритмы (закон Золушки отменён)",
+    desc:"«Закон Золушки» 2011 (комендантский час на игры до 16 лет) отменён в 2021 как неэффективный. Прямого запрета сейчас нет. В марте 2026 внесены законопроекты об обязательной проверке возраста и отключении алгоритмов для пользователей младше 19 без согласия родителей — пока лишь проекты.",
+    src:"https://www.koreaherald.com/article/10704811", srcName:"Korea Herald"},
+  {key:"Japan", ru:"Япония", age:null, status:"enacted", regime:"time", year:2025, scope:"Экранное время: местные постановления без штрафов",
+    desc:"Национального закона нет; есть лишь местные рекомендательные постановления. Город Тоякэ (2025) первым ввёл «потолок» досугового экранного времени 2 часа в день; префектура Кагава (2020) рекомендовала час игр в будни для подростков. Без штрафов.",
+    src:"https://www.theregister.com/2025/09/24/japan_toyoake_smartphone_limitation_ordinance/", srcName:"The Register"},
+  {key:"Singapore", ru:"Сингапур", age:null, status:"enacted", regime:"platform", year:2025, scope:"Без возрастного запрета: проверка возраста на платформах",
+    desc:"Сингапур сознательно отказался от единого возрастного запрета. Через Кодексы онлайн-безопасности он обязывает соцсети (с 2023) и магазины приложений (с 31 марта 2025) вводить проверку возраста и усиленные настройки для детей. Фиксированного минимального возраста нет.",
+    src:"https://www.mddi.gov.sg/newsroom/pqs-on-social-media-platforms-ensure-age-appropriate-use-young-children/", srcName:"MDDI (gov.sg)"},
+  {key:"Ireland", ru:"Ирландия", age:null, status:"enacted", regime:"platform", year:2025, scope:"Кодекс онлайн-безопасности: проверка возраста на видеоплатформах",
+    desc:"Кодекс регулятора Coimisiún na Meán обязывает видеоплатформы с европейской штаб-квартирой в Ирландии (YouTube, TikTok и др.) проверять возраст и не допускать детей к порнографии и крайнему насилию. Ключевые нормы — с 21 июля 2025.",
+    src:"https://www.cnam.ie/coimisiun-na-mean-adopts-final-online-safety-code/", srcName:"Coimisiún na Meán"},
+  {key:"Portugal", ru:"Португалия", age:16, status:"proposed", regime:"consent", year:2026, scope:"Соцсети с 16; согласие родителей с 13",
+    desc:"12 февраля 2026 парламент одобрил в первом чтении законопроект: «цифровой возраст» доступа к соцсетям — 16 лет; 13–16 лет — только с проверенного согласия родителей, до 13 — запрещено. Не промульгирован. Отдельно с 2025/26 запрещены смартфоны в 1–6 классах.",
+    src:"https://www.euronews.com/next/2026/02/13/portugal-green-lights-restrictions-for-social-media-access-for-children-under-16", srcName:"Euronews"},
+  {key:"Romania", ru:"Румыния", age:16, status:"proposed", regime:"consent", year:2025, scope:"«Цифровое совершеннолетие»: онлайн-сервисы до 16 с согласия родителей",
+    desc:"В октябре 2025 Сенат принял законопроект «о цифровом совершеннолетии»: до 16 лет — пользование онлайн-сервисами, включая соцсети, только с проверяемого согласия родителей. Передан в Палату депутатов, в силу не вступил. В школах телефоны на уроках запрещены с 2024.",
+    src:"https://agerpres.ro/politic/2025/10/06/senat-legea-majoratului-online-adoptata-accesul-la-servicii-online-doar-cu-acord-parental-pana-la-16--1490845", srcName:"Agerpres"},
+  {key:"Pakistan", ru:"Пакистан", age:16, status:"proposed", regime:"ban", year:2025, scope:"Запрет соцсетей до 16 (законопроект отозван)",
+    desc:"В июле 2025 в Сенат внесли законопроект о запрете аккаунтов в соцсетях детям до 16 с санкциями до 6 месяцев тюрьмы. 18 августа 2025 он был отозван после возражений; переработанная версия пока не принята. В Пенджабе с ноября 2025 действует запрет телефонов в школах.",
+    src:"https://www.pakistantoday.com.pk/2025/08/18/social-media-age-limit-bill-withdrawn-from-senate-after-objections/", srcName:"Pakistan Today"},
+  {key:"Philippines", ru:"Филиппины", age:16, status:"proposed", regime:"ban", year:2026, scope:"Законопроект: запрет соцсетей до 16",
+    desc:"22 апреля 2026 в Сенат внесён законопроект «Social Media Safety for Children Act» о запрете аккаунтов детям до 16 и обязательной проверке возраста (по образцу Австралии и Индонезии). Пока не принят. Отдельно приказ Минобразования запретил телефоны в школах на уроках.",
+    src:"https://www.philstar.com/nation/2026/04/25/2523466/senator-files-bill-social-media-ban-minors", srcName:"Philippine Star"},
+  {key:"Kazakhstan", ru:"Казахстан", age:16, status:"proposed", regime:"ban", year:2025, scope:"Законопроект: запрет соцсетей до 16",
+    desc:"В декабре 2025 Минкультуры подготовило законопроект о запрете регистрации в соцсетях (TikTok, Instagram, YouTube и др.) пользователям младше 16; мессенджеры не затронуты. Пока проект, в Парламент не внесён. При этом с февраля 2024 действует запрет смартфонов на уроках.",
+    src:"https://tengrinews.kz/kazakhstan_news/kazahstane-vvedut-zapret-sotsseti-detyam-16-let-novyie-599666/", srcName:"Tengrinews"},
+  {key:"Austria", ru:"Австрия", age:null, status:"enacted", regime:"school", year:2025, scope:"Запрет телефонов в школах до 8 класса",
+    desc:"С 1 мая 2025 в Австрии действует общенациональный запрет на телефоны, смарт-часы и подобные устройства в школах для учеников до 8 класса (~6–14 лет), включая перемены. Учителя могут разрешать для учёбы; есть медисключения. Это школьная мера, а не возрастной порог для соцсетей.",
+    src:"https://www.vienna.at/mobile-phone-ban-in-schools-these-rules-apply-from-may/9370184", srcName:"VIENNA.AT"},
+  {key:"Hungary", ru:"Венгрия", age:null, status:"enacted", regime:"school", year:2024, scope:"Запрет смартфонов в школах",
+    desc:"Постановление №245/2024 (с 1 сентября 2024) запрещает телефоны и устройства с интернетом в течение учебного дня; ученики сдают их учителю. Мера обязательна. Отдельно союзная «Фидес» партия ХДНП внесла законопроект о запрете соцсетей детям до 13 — пока проект.",
+    src:"https://eurydice.eacea.ec.europa.eu/news/hungary-restrictions-use-mobile-phones-schools", srcName:"Eurydice (ЕК)"},
+  {key:"Poland", ru:"Польша", age:null, status:"proposed", regime:"school", year:2026, scope:"Законопроект: запрет телефонов в начальных школах",
+    desc:"2 июня 2026 правительство одобрило законопроект о запрете телефонов и смарт-часов ученикам начальных школ (7–15 лет) в течение всего учебного дня. Планируемое вступление — 1 сентября 2026. Отдельным проектом ужесточается проверка возраста для доступа к порнографии.",
+    src:"https://notesfrompoland.com/2026/06/02/polish-government-approves-primary-school-phone-ban-and-stronger-porn-age-checks/", srcName:"Notes from Poland"},
+  {key:"Czechia", ru:"Чехия", age:null, status:"proposed", regime:"school", year:2026, scope:"Законопроект о запрете смартфонов в школах",
+    desc:"В 2026 премьер Бабиш и Минобразования внесли законопроект о запрете телефонов в школах (уроки, перемены, столовая, продлёнка) со вступлением с сентября 2027. Отдельно обсуждается запрет соцсетей детям до 15 по образцу Франции — пока без внесённого закона.",
+    src:"https://ct24.ceskatelevize.cz/clanek/domaci/nova-pravidla-pro-mobily-ve-skolach-maji-zacit-platit-od-zari-2027-uvedl-babis-374796", srcName:"ČT24"},
+  {key:"Israel", ru:"Израиль", age:null, status:"enacted", regime:"school", year:2026, scope:"Запрет смартфонов в школах",
+    desc:"Минобразования ввело обязательный запрет на телефоны на территории начальных школ (1–6 классы) с 2 февраля 2026; для средних школ запрет анонсирован с 2027 учебного года. Это школьная мера — отдельного закона о минимальном возрасте для соцсетей в Израиле нет.",
+    src:"https://www.timesofisrael.com/cellphones-to-be-banned-from-elementary-schools-nationwide-starting-february/", srcName:"Times of Israel"},
+  {key:"Mexico", ru:"Мексика", age:null, status:"enacted", regime:"school", year:2025, scope:"Запрет смартфонов в школах (на уровне штатов)",
+    desc:"Общенационального закона нет, но штаты вводят запреты телефонов в школах. Керетаро стал первым (с 20 февраля 2025), к середине 2026 подобные меры приняли ~11 штатов, включая Мехико. Отдельно обсуждается ограничение соцсетей для несовершеннолетних.",
+    src:"https://www.eluniversal.com.mx/estados/es-oficial-queretaro-prohibe-uso-de-celulares-en-escuelas-de-educacion-basica-y-bachillerato-buscan-utilizarlos-con-fines-pedagogicos/", srcName:"El Universal"},
+  {key:"Argentina", ru:"Аргентина", age:null, status:"enacted", regime:"school", year:2025, scope:"Запрет телефонов в школах (провинции)",
+    desc:"Национального закона о возрасте для соцсетей нет (есть лишь законопроект 2026 о согласии родителей для 14–16 лет), но запреты телефонов в школах действуют локально. Провинция Буэнос-Айрес запретила телефоны в начальных школах; город Буэнос-Айрес расширил запрет на все уровни в 2026.",
+    src:"https://www.infobae.com/educacion/2025/09/19/prohiben-por-ley-usar-celulares-en-las-escuelas-primarias-de-provincia-de-buenos-aires/", srcName:"Infobae"},
+  {key:"South Africa", ru:"ЮАР", age:null, status:"enacted", regime:"platform", year:2019, scope:"Возрастная классификация онлайн-контента",
+    desc:"Закона о возрасте для соцсетей нет (тема обсуждается), но действует поправка к Закону о фильмах и публикациях (в силе с 2022), распространяющая возрастную классификацию (PG/16/18) на онлайн-контент для защиты детей и обязывающая провайдеров модерировать контент.",
+    src:"https://www.gov.za/documents/acts/films-and-publications-amendment-act-11-2019-english-afrikaans-03-oct-2019", srcName:"gov.za"},
+  {key:"Uzbekistan", ru:"Узбекистан", age:null, status:"enacted", regime:"platform", year:2018, scope:"Защита детей от вредной информации, возрастная маркировка",
+    desc:"Закон о защите детей от вредной информации (в силе с 2018) вводит возрастную классификацию контента (0+…18+) и запрещает детям до 18 контент о суициде, наркотиках и насилии; в 2024 добавлен кибербуллинг. Запрет соцсетей до 16 пока лишь обсуждается.",
+    src:"https://lex.uz/docs/3333805", srcName:"Lex.uz"},
+  {key:"Sweden", ru:"Швеция", age:null, status:"reco", regime:"reco", year:2024, scope:"Рекомендации по экранному времени",
+    desc:"Управление общественного здравоохранения в 2024 впервые выпустило рекомендации по экранному времени: до 2 лет — без экранов, 2–5 — до 1 ч, 6–12 — до 2 ч, 13–18 — до 3 ч. Это рекомендации, не закон; в 2026 добавлены советы родителям убирать телефон рядом с ребёнком.",
+    src:"https://www.folkhalsomyndigheten.se/contentassets/ab9cc71603f84f048dadf4c2851032f6/recommendations-childrens-adolescents-digital-media-use.pdf", srcName:"Folkhälsomyndigheten"},
+  {key:"Switzerland", ru:"Швейцария", age:null, status:"discussion", regime:"discussion", year:2025, scope:"Дебаты о пороге соцсетей до 16",
+    desc:"Действующего запрета нет, но тема активно обсуждается. В марте 2025 Совет кантонов поручил изучить запрет TikTok/Instagram и др. для детей до 16; опрос (май 2025) показал 80% поддержки. Одобренная e-ID рассматривается как инструмент будущей проверки возраста.",
+    src:"https://www.thelocal.ch/20251010/will-switzerland-move-to-ban-social-media-for-children", srcName:"The Local (CH)"},
+  {key:"Thailand", ru:"Таиланд", age:null, status:"discussion", regime:"discussion", year:2026, scope:"Изучение запрета соцсетей до 16",
+    desc:"21 июня 2026 вице-премьер, глава Фонда укрепления здоровья (ThaiHealth), заявил, что Таиланд изучает запрет соцсетей детям до 16 по образцу Австралии; официального законопроекта пока нет. С 18 мая 2026 в 437 школах Бангкока действует запрет телефонов на уроках.",
+    src:"https://thethaiger.com/news/national/thailand-eyes-under-16-social-media-ban-over-screen-time", srcName:"The Thaiger"},
+  {key:"Iran", ru:"Иран", age:null, status:"discussion", regime:"platform", year:2022, scope:"Отдельный «детский интернет» (резолюции режима, частично)",
+    desc:"Высший совет киберпространства в 2022 принял резолюцию о защите детей до 18 в сети: классификация контента, проверка личности, «защищённые среды». Операторы продают детские SIM с доступом к белому списку. Это политика режима (не принятый парламентом закон), внедрённая лишь частично; её следует отличать от общей цензуры.",
+    src:"https://filter.watch/english/2022/11/04/part-one-childrens-internet-and-digital-rights-in-iran-policies-and-legislations/", srcName:"Filterwatch"},
+  {key:"Albania", ru:"Албания", age:null, status:"discussion", regime:"platform", year:2025, scope:"Годовой запрет TikTok снят и признан неконституционным",
+    desc:"В марте 2025 Албания на год полностью заблокировала TikTok для всех пользователей — премьер Рама обосновал это защитой детей после убийства подростка. В феврале 2026 запрет сняли, а 11 марта 2026 Конституционный суд признал его неконституционным как нарушение свободы слова. Действующего запрета нет.",
+    src:"https://balkaninsight.com/2026/03/11/albanias-tiktok-ban-violated-free-expression-court-rules/", srcName:"Balkan Insight"},
 ];
 
 const byKey = new Map(COUNTRIES.map(c => [c.key, c]));
@@ -1346,6 +1468,7 @@ const nTotal = COUNTRIES.length;
 animateCount(document.getElementById('stat-ban'),   nBan);
 animateCount(document.getElementById('stat-prop'),  nProp);
 animateCount(document.getElementById('stat-total'), nTotal);
+const calloutBan=document.getElementById('callout-ban'); if(calloutBan) animateCount(calloutBan, nBan);
 
 function animateCount(el, target){
   if (reduceMotion){ el.textContent = target; return; }
@@ -1525,6 +1648,7 @@ function redraw(){
 
 function fillFor(c){
   if(c.status==='reco' || c.status==='discussion') return 'transparent';
+  if(c.age==null) return getCss('--no-age');
   return AGE_COLORS[c.age];
 }
 
