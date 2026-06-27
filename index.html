@@ -45,6 +45,7 @@
   --age-18: oklch(0.700 0.180 26);
 
   --neutral-reco: oklch(0.560 0.020 264);
+  --status-discussion: oklch(0.660 0.100 300);
 
   /* Type */
   --sans: 'Onest', system-ui, sans-serif;
@@ -313,6 +314,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .lkey .sw--enacted { background: var(--neutral-reco); background: oklch(0.7 0.02 264); }
 .lkey .sw--prop { border: 1.5px dashed oklch(0.75 0.02 264); background: oklch(0.75 0.02 264 / 0.28); }
 .lkey .sw--reco { border: 1.5px dotted var(--neutral-reco); background: transparent; }
+.lkey .sw--disc { border: 1.5px dashed var(--status-discussion); background: color-mix(in oklch, var(--status-discussion) 18%, transparent); }
 
 /* ============================================================
    DETAIL DRAWER
@@ -392,6 +394,49 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .callout p { color: var(--ink); font-size: clamp(1.05rem, 2.2vw, 1.35rem); line-height: 1.4; text-wrap: pretty; font-weight: 500; }
 .callout p span { color: var(--ink-3); display: block; font-size: 0.85rem; font-weight: 400; margin-top: 0.5rem; line-height: 1.5; }
 @media (max-width: 540px) { .callout { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   RUSSIA DEEP-DIVE
+   ============================================================ */
+.rusec { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.rusec__head { display: grid; grid-template-columns: auto 1fr; gap: clamp(1.5rem, 5vw, 3.5rem); align-items: center; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+.rusec__big {
+  font-family: var(--mono); font-weight: 700; line-height: 0.8;
+  font-size: clamp(5rem, 16vw, 11rem); color: var(--status-discussion);
+  letter-spacing: -0.05em; text-align: center;
+}
+.rusec__big span { display: block; font-family: var(--sans); font-weight: 500; font-size: 0.8rem; letter-spacing: 0; color: var(--ink-3); margin-top: 0.4rem; line-height: 1.3; }
+.rusec__head h2 { font-size: clamp(1.7rem, 4.2vw, 2.8rem); margin-bottom: 1rem; }
+.rusec__lead { color: var(--ink-2); font-size: clamp(1.02rem, 1.7vw, 1.18rem); max-width: 58ch; text-wrap: pretty; line-height: 1.55; }
+.rusec__lead b { color: var(--ink); font-weight: 600; }
+@media (max-width: 680px) { .rusec__head { grid-template-columns: 1fr; text-align: left; } .rusec__big { text-align: left; } }
+
+/* fact list — editorial, not boxed cards */
+.rufacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0 clamp(2rem, 5vw, 4rem); border-top: 1px solid var(--line); }
+.rufact { padding: clamp(1.3rem, 3vw, 1.9rem) 0; border-bottom: 1px solid var(--line-soft); }
+.rufact h3 { font-size: 1.12rem; margin-bottom: 0.6rem; display: flex; align-items: baseline; gap: 0.6rem; }
+.rufact h3::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--status-discussion); flex: none; transform: translateY(-1px); }
+.rufact p { color: var(--ink-2); font-size: 0.94rem; line-height: 1.6; text-wrap: pretty; }
+.rufact p b { color: var(--ink); font-weight: 600; }
+.rufact__src { display: inline-block; margin-top: 0.8rem; font-family: var(--mono); font-size: 0.74rem; color: var(--ink-3); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 1px; transition: color 0.2s, border-color 0.2s; }
+.rufact__src:hover { color: var(--ink); border-color: var(--status-discussion); }
+
+/* timeline of proposals */
+.ruline { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+.ruline__title { font-size: clamp(1.2rem, 2.5vw, 1.5rem); margin-bottom: 1.6rem; }
+.rutl { list-style: none; padding: 0; margin: 0; position: relative; display: grid; gap: 0; }
+.rutl::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 1.5px; background: linear-gradient(var(--status-discussion), var(--line)); }
+.rutl li { position: relative; padding: 0 0 1.4rem 2.2rem; }
+.rutl li:last-child { padding-bottom: 0; }
+.rutl li::before { content: ""; position: absolute; left: 0; top: 4px; width: 13px; height: 13px; border-radius: 50%; background: var(--bg); border: 2px solid var(--status-discussion); }
+.rutl li.is-counter::before { border-color: var(--age-14); }
+.rutl__date { display: inline-block; font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3); margin-bottom: 0.3rem; letter-spacing: 0.02em; }
+.rutl li > div { color: var(--ink-2); font-size: 0.95rem; line-height: 1.55; text-wrap: pretty; }
+.rutl b { color: var(--ink); font-weight: 600; }
+.rutl a { font-family: var(--mono); font-size: 0.74rem; color: var(--ink-3); text-decoration: none; border-bottom: 1px solid var(--line); transition: color 0.2s, border-color 0.2s; white-space: nowrap; }
+.rutl a:hover { color: var(--ink); border-color: var(--status-discussion); }
+.runote { margin-top: clamp(2rem, 4vw, 3rem); padding: clamp(1.2rem, 3vw, 1.8rem); border: 1px solid var(--line); border-radius: 14px; background: color-mix(in oklch, var(--status-discussion) 9%, transparent); color: var(--ink); font-size: clamp(0.98rem, 1.6vw, 1.12rem); line-height: 1.5; text-wrap: pretty; }
+.runote b { font-weight: 600; }
 
 /* ============================================================
    RANKING TABLE
@@ -504,7 +549,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
           <span class="eyebrow">Интерактивная карта</span>
           <h2>Возрастной порог по странам</h2>
         </div>
-        <p>Цвет — возраст, с которого снимаются ограничения. Заливка — закон уже действует; пунктир — на рассмотрении; контур — рекомендация.</p>
+        <p>Цвет — возраст, с которого снимаются ограничения. Заливка — закон уже действует; пунктир — на рассмотрении; контур — рекомендация; фиолетовый — закона нет, идут споры (Россия).</p>
       </div>
 
       <div class="controls" id="filters" role="group" aria-label="Фильтр по статусу">
@@ -512,6 +557,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
         <button class="chip" data-filter="enacted" aria-pressed="false"><span class="swatch" style="background:oklch(0.75 0.02 264)"></span>Действует <span class="count" data-c="enacted"></span></button>
         <button class="chip" data-filter="proposed" aria-pressed="false"><span class="swatch" style="background:transparent;border:1px dashed oklch(0.75 0.02 264)"></span>На рассмотрении <span class="count" data-c="proposed"></span></button>
         <button class="chip" data-filter="reco" aria-pressed="false"><span class="swatch" style="background:transparent;border:1px dotted oklch(0.6 0.02 264)"></span>Рекомендация <span class="count" data-c="reco"></span></button>
+        <button class="chip" data-filter="discussion" aria-pressed="false"><span class="swatch" style="background:var(--status-discussion);opacity:0.5"></span>Закона нет · спорят <span class="count" data-c="discussion"></span></button>
       </div>
 
       <div class="mapframe" id="mapframe">
@@ -538,6 +584,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
             <span class="lkey"><span class="sw sw--enacted"></span>Действует</span>
             <span class="lkey"><span class="sw sw--prop"></span>На рассмотрении</span>
             <span class="lkey"><span class="sw sw--reco"></span>Рекомендация</span>
+            <span class="lkey"><span class="sw sw--disc"></span>Закона нет · спорят</span>
           </div>
         </div>
       </div>
@@ -585,6 +632,67 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
     </div>
   </section>
 
+  <!-- RUSSIA DEEP-DIVE -->
+  <section class="rusec" id="russia">
+    <div class="wrap">
+      <div class="rusec__head reveal">
+        <div class="rusec__big">—<span>возрастного закона нет</span></div>
+        <div>
+          <span class="eyebrow" style="color:var(--status-discussion)">Особый случай</span>
+          <h2>Россия: закона нет — но обсуждают жёсткий</h2>
+          <p class="rusec__lead">В России <b>нет закона</b>, который устанавливал бы минимальный возраст для соцсетей. Зато телефоны убрали с уроков, детей переводят в государственную экосистему, а в Госдуме звучат всё более радикальные идеи — от запрета до 14 лет до запрета интернета. Разбираем по источникам.</p>
+        </div>
+      </div>
+
+      <div class="rufacts">
+        <article class="rufact reveal">
+          <h3>Закона о возрасте нет</h3>
+          <p>152-ФЗ «О персональных данных» (ред. 24.06.2025) не задаёт возраст «цифрового согласия» — в отличие от европейского GDPR с планкой 13–16. Цифра «14» выводится из Гражданского кодекса (с 14 подросток может сам совершать часть сделок), а не из закона о соцсетях.</p>
+          <a class="rufact__src" href="https://www.consultant.ru/document/cons_doc_LAW_61801/6c94959bc017ac80140621762d2ac59f6006b08c/" target="_blank" rel="noopener">КонсультантПлюс · ст. 9 152-ФЗ ↗</a>
+        </article>
+        <article class="rufact reveal">
+          <h3>Возраст — на честном слове</h3>
+          <p>VK возраст не проверяет: в пользовательском соглашении (ред. 12.12.2025) нет жёсткой цифры — лишь «возраст, допустимый законом». Регистрация упирается только в поле даты рождения, и дети просто указывают год постарше. Прямого противоречия закону нет — потому что и самого закона о возрасте нет; есть дыра в правоприменении.</p>
+          <a class="rufact__src" href="https://adblogger.vk.ru/documents/terms" target="_blank" rel="noopener">VK · Пользовательское соглашение ↗</a>
+        </article>
+        <article class="rufact reveal">
+          <h3>Телефоны — вне урока</h3>
+          <p>618-ФЗ (подписан 19.12.2023, в силе с 1 сентября 2024) запрещает пользоваться личными телефонами на уроках — кроме угрозы жизни и здоровью. Это запрет по месту и времени, а не по возрасту: приносить телефон в школу можно.</p>
+          <a class="rufact__src" href="https://www.consultant.ru/legalnews/24116/" target="_blank" rel="noopener">КонсультантПлюс · 618-ФЗ ↗</a>
+        </article>
+        <article class="rufact reveal">
+          <h3>Детей ведут в госэкосистему</h3>
+          <p>Школьная платформа Сферум и национальный мессенджер MAX (VK + Ростелеком) стали обязательными: по 156-ФЗ школы обязаны вести официальный канал в MAX, а с 1 сентября 2025 MAX предустанавливают на новые устройства. Участие формально добровольное.</p>
+          <a class="rufact__src" href="https://vk.company/ru/press/releases/12119/" target="_blank" rel="noopener">VK Company · Сферум в MAX ↗</a>
+        </article>
+      </div>
+
+      <div class="ruline reveal">
+        <h3 class="ruline__title">О чём спорят в Госдуме</h3>
+        <ol class="rutl">
+          <li>
+            <span class="rutl__date">Январь 2025</span>
+            <div><b>Запрет соцсетей до 14 лет</b> — идея впервые звучит в Госдуме. Статус: обсуждение. <a href="https://ria.ru/20250115/sotsseti-1993758944.html" target="_blank" rel="noopener">РИА ↗</a></div>
+          </li>
+          <li>
+            <span class="rutl__date">Декабрь 2025</span>
+            <div><b>«Жесточайшие ограничения»</b> — депутат А. Свинцов: запрет регистрации до 14 + верификация всех аккаунтов через Госуслуги. Статус: предложение. <a href="https://vc.ru/social/2661659-zapret-socsetey-do-14-let-i-verifikatsiya-cherez-gosuslugi" target="_blank" rel="noopener">vc.ru ↗</a></div>
+          </li>
+          <li class="is-counter">
+            <span class="rutl__date">Декабрь 2025 · официальная позиция</span>
+            <div><b>Дума запрет не разрабатывает</b> — А. Горелкин: эффект австралийского запрета не доказан, ответственность лежит на родителях, ставка — на родительский контроль и «детские SIM-карты». <a href="https://tass.ru/politika/25990565" target="_blank" rel="noopener">ТАСС ↗</a></div>
+          </li>
+          <li>
+            <span class="rutl__date">Март 2026</span>
+            <div><b>Запрет интернета до 14 лет</b> — Н. Останина предлагает ограничить детям не только соцсети, но и доступ в интернет «до получения паспорта». Статус: предложение. <a href="https://news.mail.ru/society/70324459/" target="_blank" rel="noopener">news.mail.ru ↗</a></div>
+          </li>
+        </ol>
+      </div>
+
+      <p class="runote">Ни одно из «возрастных» предложений не стало законом. На середину 2026 единственная действующая «детская» норма — <b>запрет телефонов на уроках</b>; всё остальное — корпоративные правила VK без проверки возраста и политические дискуссии.</p>
+    </div>
+  </section>
+
   <!-- RANKING -->
   <section class="ranking" id="ranking">
     <div class="wrap">
@@ -616,7 +724,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
         <div>
           <h4>МЕТОДОЛОГИЯ</h4>
           <p>На карте — страны, где есть закон, принятая политика или официально внесённый национальный законопроект, устанавливающий возрастной порог для соцсетей или смартфонов. «Действует» не равно «применяется»: часть законов оспорена в судах (США) или ждёт подзаконных актов.</p>
-          <p class="foot__note">Региональные меры (отдельные штаты США, провинции Канады) и школьные запреты телефонов показаны на уровне страны и упомянуты в карточках. Резолюция Европарламента (16+, ноябрь 2025) носит рекомендательный характер и в карту не включена.</p>
+          <p class="foot__note">Региональные меры (отдельные штаты США, провинции Канады) и школьные запреты телефонов показаны на уровне страны и упомянуты в карточках. Резолюция Европарламента (16+, ноябрь 2025) носит рекомендательный характер и в карту не включена. Россия отмечена статусом «закона нет, идут споры»: возрастной порог для соцсетей законом не установлен — подробности в разделе «Россия».</p>
         </div>
         <div>
           <h4 id="srclist-title">ИСТОЧНИКИ</h4>
@@ -677,13 +785,19 @@ const AGE_COLORS = {
 function getCss(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
 
 const STATUS = {
-  enacted:  { ru: 'Действует',        color: getCss('--age-14') },
-  proposed: { ru: 'На рассмотрении',  color: getCss('--age-16') },
-  reco:     { ru: 'Рекомендация',     color: getCss('--neutral-reco') },
+  enacted:    { ru: 'Действует',          color: getCss('--age-14') },
+  proposed:   { ru: 'На рассмотрении',    color: getCss('--age-16') },
+  reco:       { ru: 'Рекомендация',       color: getCss('--neutral-reco') },
+  discussion: { ru: 'Закона нет · спорят', color: getCss('--status-discussion') },
 };
 const REGIME = {
-  ban:'Прямой запрет', consent:'Родительское согласие', time:'Лимиты экранного времени', reco:'Рекомендация (без закона)'
+  ban:'Прямой запрет', consent:'Родительское согласие', time:'Лимиты экранного времени',
+  reco:'Рекомендация (без закона)', discussion:'Возрастного закона нет; идут обсуждения'
 };
+
+// возраст может отсутствовать (Россия): закон не задаёт порога
+function colorFor(c){ return c.status==='discussion' ? getCss('--status-discussion') : AGE_COLORS[c.age]; }
+function ageText(c){ return c.age==null ? '—' : c.age; }
 
 const COUNTRIES = [
   {key:"Australia", ru:"Австралия", age:16, status:"enacted", regime:"ban", year:2025, scope:"Запрет соцсетей до 16",
@@ -745,6 +859,10 @@ const COUNTRIES = [
   {key:"Finland", ru:"Финляндия", age:16, status:"reco", regime:"reco", year:2026, scope:"Рекомендация: смартфон 13, соцсети 16",
     desc:"Национальные рекомендации 2026 года: личный смартфон не раньше 13 лет, соцсети — не раньше 16. Носят рекомендательный характер; премьер поддерживает идею запрета до 15, но закона нет.",
     src:"https://www.oph.fi/en/news/2026/recommendations-children-use-digital-devices-completed-personal-smartphones-not", srcName:"Finnish National Agency for Education"},
+
+  {key:"Russia", ru:"Россия", age:null, status:"discussion", regime:"discussion", year:2026, scope:"Возрастного закона нет; запрет телефонов на уроках",
+    desc:"Закона о минимальном возрасте для соцсетей нет: 152-ФЗ не задаёт возраст «цифрового согласия», а «14» выводится из Гражданского кодекса. VK возраст не проверяет — он указывается на честном слове. Зато с 1 сентября 2024 действует запрет телефонов на уроках (618-ФЗ), а детей ведут в госэкосистему (Сферум, мессенджер MAX). В Госдуме обсуждают запрет до 14 и верификацию через Госуслуги, но официально заявляют, что запрет не разрабатывают. Подробный разбор — в блоке ниже.",
+    src:"https://tass.ru/politika/25990565", srcName:"ТАСС: Дума не разрабатывает запрет"},
 ];
 
 const byKey = new Map(COUNTRIES.map(c => [c.key, c]));
@@ -777,9 +895,10 @@ function animateCount(el, target){
 }
 
 /* ---------------- FILTER COUNTS + RAMP + RANKING + SOURCES ---------------- */
-['enacted','proposed','reco'].forEach(s=>{
+['enacted','proposed','reco','discussion'].forEach(s=>{
   const n = COUNTRIES.filter(c=>c.status===s).length;
-  document.querySelector(`[data-c="${s}"]`).textContent = n;
+  const el = document.querySelector(`[data-c="${s}"]`);
+  if(el) el.textContent = n;
 });
 
 const ramp = document.getElementById('ramp');
@@ -796,17 +915,20 @@ const ramp = document.getElementById('ramp');
 
 // ranking table, sorted by age desc then status
 const rbody=document.getElementById('rbody');
-const order={enacted:0,proposed:1,reco:2};
-[...COUNTRIES].sort((a,b)=> b.age-a.age || order[a.status]-order[b.status] || a.ru.localeCompare(b.ru,'ru'))
+const order={enacted:0,proposed:1,reco:2,discussion:3};
+[...COUNTRIES].sort((a,b)=> (b.age??-1)-(a.age??-1) || order[a.status]-order[b.status] || a.ru.localeCompare(b.ru,'ru'))
   .forEach(c=>{
     const tr=document.createElement('tr');
     tr.className='rrow'; tr.tabIndex=0; tr.dataset.key=c.key;
     tr.setAttribute('role','button');
-    tr.setAttribute('aria-label',`${c.ru}, порог ${c.age}, ${STATUS[c.status].ru}`);
+    tr.setAttribute('aria-label',`${c.ru}, ${c.age==null?'возрастного закона нет':'порог '+c.age}, ${STATUS[c.status].ru}`);
+    const chipStyle = c.status==='discussion'
+      ? `background:transparent;border:1.5px dashed ${colorFor(c)};color:${colorFor(c)}`
+      : `background:${colorFor(c)}`;
     tr.innerHTML=`
       <td class="c-flag"></td>
       <td><span class="c-name">${c.ru}</span></td>
-      <td class="num"><span class="agechip" style="background:${AGE_COLORS[c.age]}">${c.age}</span></td>
+      <td class="num"><span class="agechip" style="${chipStyle}">${ageText(c)}</span></td>
       <td class="hide-sm"><span class="c-scope">${c.scope}</span></td>
       <td class="c-status"><span class="tag"><span class="dot" style="background:${STATUS[c.status].color}"></span>${STATUS[c.status].ru}</span></td>
       <td class="num c-year hide-sm">${c.year}</td>`;
@@ -872,13 +994,14 @@ function drawMap(land){
       const sel=d3.select(this);
       if(!c) return;
       sel.attr('fill', fillFor(c))
-         .attr('stroke', AGE_COLORS[c.age])
+         .attr('stroke', colorFor(c))
          .attr('data-key', c.key)
          .attr('tabindex', 0)
          .attr('role','button')
-         .attr('aria-label', `${c.ru}: порог ${c.age}, ${STATUS[c.status].ru}`);
-      if(c.status==='proposed') sel.attr('stroke-dasharray','3,2.5').attr('stroke-width',0.9).attr('fill-opacity',0.42);
-      if(c.status==='reco')     sel.attr('stroke-dasharray','1,2.5').attr('stroke-width',1).attr('fill', 'transparent');
+         .attr('aria-label', `${c.ru}: ${c.age==null?'возрастного закона нет':'порог '+c.age}, ${STATUS[c.status].ru}`);
+      if(c.status==='proposed')   sel.attr('stroke-dasharray','3,2.5').attr('stroke-width',0.9).attr('fill-opacity',0.42);
+      if(c.status==='reco')       sel.attr('stroke-dasharray','1,2.5').attr('stroke-width',1).attr('fill', 'transparent');
+      if(c.status==='discussion') sel.attr('stroke-dasharray','2,3').attr('stroke-width',1).attr('fill', colorFor(c)).attr('fill-opacity',0.16);
     });
 
   countryNodes.filter(d=>byKey.has(d.properties.name))
@@ -930,7 +1053,7 @@ function redraw(){
 }
 
 function fillFor(c){
-  if(c.status==='reco') return 'transparent';
+  if(c.status==='reco' || c.status==='discussion') return 'transparent';
   return AGE_COLORS[c.age];
 }
 
@@ -943,7 +1066,7 @@ function showTip(e,c){
 function showTipStatic(c){ fillTip(c); tip.style.left='16px'; tip.style.top='16px'; tip.classList.add('is-on'); }
 function fillTip(c){
   tip.innerHTML=`
-    <div class="tip__name"><span class="tip__age" style="color:${AGE_COLORS[c.age]}">${c.age}</span> ${c.ru}</div>
+    <div class="tip__name"><span class="tip__age" style="color:${colorFor(c)}">${ageText(c)}</span> ${c.ru}</div>
     <div class="tip__line">${c.scope}</div>
     <span class="tip__status" style="border-color:${STATUS[c.status].color}66">${STATUS[c.status].ru} · ${c.year}</span>`;
 }
@@ -989,8 +1112,8 @@ function openDrawer(key){
   const c=byKey.get(key); if(!c) return;
   currentKey=key;
   lastFocus=document.activeElement;
-  document.getElementById('drawer-age').innerHTML=`${c.age}<small> лет</small>`;
-  document.getElementById('drawer-age').style.color=AGE_COLORS[c.age];
+  document.getElementById('drawer-age').innerHTML = c.age==null ? `—<small> нет порога</small>` : `${c.age}<small> лет</small>`;
+  document.getElementById('drawer-age').style.color=colorFor(c);
   document.getElementById('drawer-name').textContent=c.ru;
   const st=document.getElementById('drawer-status');
   st.innerHTML=`<span class="dot" style="background:${STATUS[c.status].color}"></span>${STATUS[c.status].ru}`;
