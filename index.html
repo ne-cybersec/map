@@ -507,6 +507,51 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .d-voices__more:hover { color: var(--ink); }
 
 /* ============================================================
+   MID-PAGE PROMO BANNER
+   ============================================================ */
+.promo { padding-block: clamp(2rem, 5vw, 3.5rem); }
+.promo a {
+  display: flex; align-items: center; gap: clamp(1rem, 3vw, 2rem); text-decoration: none;
+  padding: clamp(1.3rem, 4vw, 2.3rem); border: 1px solid var(--line); border-radius: 18px;
+  background: linear-gradient(110deg, oklch(0.23 0.035 30 / 0.55), oklch(0.21 0.03 255 / 0.45));
+  transition: border-color .25s, transform .25s var(--ease-quint), box-shadow .25s;
+}
+.promo a:hover { border-color: var(--age-16); transform: translateY(-2px); box-shadow: 0 24px 60px -36px oklch(0 0 0 / 0.8); }
+.promo__logo { width: clamp(56px, 13vw, 88px); height: clamp(56px, 13vw, 88px); border-radius: 16px; object-fit: cover; flex: none; box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.15); }
+.promo__txt { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.promo__name { font-family: var(--mono); font-weight: 700; font-size: clamp(1.1rem, 2.6vw, 1.55rem); color: var(--ink); letter-spacing: -0.01em; }
+.promo__tag { color: var(--ink-2); font-size: clamp(0.95rem, 1.8vw, 1.18rem); text-wrap: pretty; }
+.promo__cta { margin-left: auto; font-family: var(--mono); font-size: 0.8rem; color: var(--age-16); white-space: nowrap; }
+@media (max-width: 580px) { .promo a { flex-wrap: wrap; } .promo__cta { margin-left: 0; width: 100%; } }
+
+/* ============================================================
+   HASHTAGS
+   ============================================================ */
+.tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2.2rem; }
+.tags a { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-3); text-decoration: none; padding: 0.35rem 0.75rem; border: 1px solid var(--line-soft); border-radius: 999px; transition: color .2s, border-color .2s, background .2s; }
+.tags a:hover { color: var(--ink); border-color: var(--ink-3); background: var(--surface); }
+
+/* ============================================================
+   RUSSIA QUOTES BLOCK
+   ============================================================ */
+.ruq { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+.ruq__head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.ruq__head h3 { font-size: clamp(1.4rem, 3.4vw, 2.1rem); }
+.ruq__head .n { font-family: var(--mono); font-size: 0.78rem; color: var(--status-discussion); }
+.ruq__grid { columns: 3 290px; column-gap: 1rem; }
+.ruq__grid.is-collapsed { max-height: 760px; overflow: hidden; -webkit-mask-image: linear-gradient(black 68%, transparent); mask-image: linear-gradient(black 68%, transparent); }
+.ruqc { break-inside: avoid; margin: 0 0 1rem; padding: 1rem 1.1rem; border: 1px solid var(--line-soft); border-radius: 13px; background: var(--surface); }
+.ruqc__stance { display: inline-block; font-family: var(--mono); font-size: 0.63rem; color: var(--c, var(--ink-2)); border: 1px solid var(--c, var(--line)); padding: 0.1rem 0.45rem; border-radius: 5px; margin-bottom: 0.55rem; }
+.ruqc blockquote { margin: 0; color: var(--ink); font-size: 0.92rem; line-height: 1.5; text-wrap: pretty; }
+.ruqc figcaption { margin-top: 0.6rem; font-size: 0.8rem; color: var(--ink-2); }
+.ruqc figcaption b { color: var(--ink); font-weight: 600; }
+.ruqc figcaption span { display: block; color: var(--ink-3); font-size: 0.74rem; }
+.ruqc figcaption a { display: inline-block; margin-top: 0.35rem; font-family: var(--mono); font-size: 0.7rem; color: var(--ink-3); text-decoration: none; border-bottom: 1px solid var(--line); transition: color .2s; }
+.ruqc figcaption a:hover { color: var(--ink); }
+.ruq__more { margin-top: 1.3rem; display: inline-flex; font-family: var(--mono); font-size: 0.8rem; color: var(--ink-2); border: 1px solid var(--line); border-radius: 999px; padding: 0.5rem 1.15rem; transition: border-color .2s, color .2s, background .2s; }
+.ruq__more:hover { border-color: var(--ink-3); color: var(--ink); background: var(--surface); }
+
+/* ============================================================
    RANKING TABLE
    ============================================================ */
 .ranking { padding-block: clamp(2rem, 5vw, 4rem); }
@@ -576,8 +621,8 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 <header class="topbar">
   <div class="wrap topbar__inner">
     <a class="brand" href="https://t.me/ne_cybersec" target="_blank" rel="noopener">
-      <span class="brand__mark" aria-hidden="true"><img src="kremlin.jpg" alt="" loading="eager" onerror="this.remove()"></span>
-      <span>@ne_cybersec <small>· карта мира 2026</small></span>
+      <span class="brand__mark" aria-hidden="true"><img src="logo.jpg" alt="" loading="eager" onerror="this.remove()"></span>
+      <span>@ne_cybersec</span>
     </a>
     <div class="topbar__meta">данные на июнь&nbsp;2026 · <a href="#sources">источники</a></div>
   </div>
@@ -727,6 +772,20 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
     </div>
   </section>
 
+  <!-- MID-PAGE PROMO -->
+  <section class="promo" aria-label="Канал ne_cybersec">
+    <div class="wrap">
+      <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">
+        <img class="promo__logo" src="logo.jpg" alt="Логотип канала ne_cybersec" onerror="this.style.display='none'">
+        <span class="promo__txt">
+          <span class="promo__name">ne_cybersec</span>
+          <span class="promo__tag">Мы защищаем традиционное образование</span>
+        </span>
+        <span class="promo__cta">Подписаться в Telegram →</span>
+      </a>
+    </div>
+  </section>
+
   <!-- RUSSIA DEEP-DIVE -->
   <section class="rusec" id="russia">
     <div class="wrap">
@@ -785,6 +844,15 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
       </div>
 
       <p class="runote">Ни одно из «возрастных» предложений не стало законом. На середину 2026 единственная действующая «детская» норма — <b>запрет телефонов на уроках</b>; всё остальное — корпоративные правила VK без проверки возраста и политические дискуссии.</p>
+
+      <div class="ruq" id="ruq" hidden>
+        <div class="ruq__head">
+          <h3>Что говорят о запрете в России?</h3>
+          <span class="n" id="ruq-n"></span>
+        </div>
+        <div class="ruq__grid is-collapsed" id="ruq-grid"></div>
+        <button class="ruq__more" id="ruq-more" type="button" hidden>Показать все ↓</button>
+      </div>
     </div>
   </section>
 
@@ -826,8 +894,21 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
           <div class="srclist" id="srclist" aria-labelledby="srclist-title"></div>
         </div>
       </div>
+      <nav class="tags" aria-label="Темы">
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#соцсети</a>
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#дети</a>
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#запретсоцсетей</a>
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#безопасностьдетей</a>
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#смартфонывшколе</a>
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#цифроваягигиена</a>
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#традиционноеобразование</a>
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#подростки</a>
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#онлайнбезопасность</a>
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#родительскийконтроль</a>
+        <a href="https://t.me/ne_cybersec" target="_blank" rel="noopener">#ne_cybersec</a>
+      </nav>
       <div class="foot__bottom">
-        <span><a href="https://t.me/ne_cybersec" target="_blank" rel="noopener" style="color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)">@ne_cybersec</a> · независимая визуализация</span>
+        <span><a href="https://t.me/ne_cybersec" target="_blank" rel="noopener" style="color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)">@ne_cybersec</a> · мы защищаем традиционное образование</span>
         <span>Данные на 27 июня 2026</span>
       </div>
     </div>
@@ -901,7 +982,54 @@ const STANCE = {
   support:  { ru: 'За ограничения',   color: getCss('--age-14') },
   critic:   { ru: 'Критика',          color: getCss('--age-18') },
   child:    { ru: 'Голос подростка',  color: getCss('--status-discussion') },
+  neutral:  { ru: 'Данные · опрос',   color: getCss('--ink-3') },
 };
+// Россия — мнения о запрете (реальные, каждая со ссылкой). {author, role, stance, q, src, srcName}
+const RU_QUOTES = [
+  {author:'Сергей Кравцов', role:'министр просвещения РФ', stance:'official', q:'Ненормально, когда с трёх лет ребёнку дают смартфон или планшет, чтобы он не отвлекал родителей. Это влияет на психологическое развитие ребёнка.', src:'https://politsovet.ru/86989-ministr-vystupil-za-zapret-smartfonov-dlya-malenkih-detey.html', srcName:'Полит.совет'},
+  {author:'Максут Шадаев', role:'глава Минцифры России', stance:'official', q:'Ближайшая повестка — это всё-таки вопрос встраивания механизмов возрастной идентификации в платформы. … Этот вопрос точно перед нами встанет.', src:'https://www.comnews.ru/content/245725/2026-06-08/2026-w24/1009/shadaev-nazval-identifikaciyu-vozrasta-polzovateley-blizhayshey-povestkoy', srcName:'ComNews (по РБК)'},
+  {author:'Антон Горелкин', role:'первый зампред комитета Госдумы по информполитике', stance:'critic', q:'Считаю такой подход намного более правильным, чем тотальный запрет. Инициативы, подобные австралийским, в Госдуме не прорабатываются, медийный шум не оправдан.', src:'https://www.pnp.ru/social/v-gosdume-ne-rabotayut-nad-zapretom-socsetey-dlya-detey-i-podrostkov.html', srcName:'Парламентская газета'},
+  {author:'Сергей Боярский', role:'председатель комитета Госдумы по информполитике', stance:'support', q:'Считаю, что они объективно назрели, поскольку слишком много опасности для детей можно встретить на площадках разных ресурсов, в том числе соцсетей.', src:'https://ria.ru/20260209/sotsseti-2073209356.html', srcName:'РИА Новости'},
+  {author:'Сергей Боярский', role:'председатель комитета Госдумы по информполитике', stance:'critic', q:'«Единая Россия» против идей запретить доступ пользователям до 14 лет в соцсети. Регулировать доступ детей — это дело внутрисемейное, и не надо туда лезть.', src:'https://www.interfax.ru/russia/1090195', srcName:'Интерфакс'},
+  {author:'Андрей Свинцов', role:'зампред комитета Госдумы по информполитике (ЛДПР)', stance:'support', q:'Предлагаю пойти по тому же принципу, что и в Австралии: до 14 лет ограничить доступ детей к соцсетям, с 14 до 16 сделать минимальный доступ.', src:'https://absatz.media/news/144198-v-rossii-mogut-vvesti-polnyj-zapret-na-socseti-dlya-detej-do-14-let', srcName:'Абзац'},
+  {author:'Нина Останина', role:'председатель комитета Госдумы по защите семьи', stance:'support', q:'Вполне резонно ограничить до 14 — это возраст, прописанный в нашем законодательстве: дети начинают самостоятельно принимать решения, получают паспорт.', src:'http://govoritmoskva.ru/news/492718/', srcName:'Говорит Москва'},
+  {author:'Нина Останина', role:'председатель комитета Госдумы по защите семьи', stance:'support', q:'Прежде чем говорить о возрастных ограничениях, мы должны предложить, чем это заменить. Время ребёнка должно быть тотально занято: студии, кружки, секции.', src:'http://govoritmoskva.ru/news/492718/', srcName:'Говорит Москва'},
+  {author:'Виталий Милонов', role:'зампред комитета Госдумы по защите семьи', stance:'support', q:'Соцсети для детей должны быть только с разрешения родителей. Свободное неконтролируемое общение со всевозможными рисками без санкции родителей — это преступление.', src:'https://www.pnp.ru/social/deputat-milonov-deti-dolzhny-zakhodit-v-socseti-tolko-s-razresheniya-roditeley.html', srcName:'Парламентская газета'},
+  {author:'Антон Немкин', role:'член комитета Госдумы по информполитике', stance:'support', q:'Введение более строгих мер позволит ограничить доступ детей к материалам для взрослой аудитории, включая контент с маркировкой 18+.', src:'https://www.connect-wit.ru/protsess-verifikatsii-vozrasta-polzovatelya-v-seti-predlozhili-zakrepit-v-zakone.html', srcName:'Connect-WIT'},
+  {author:'Антон Немкин', role:'член комитета Госдумы по информполитике', stance:'critic', q:'Даже проверки возраста не помешают манипуляторам контактировать с детьми, создавая видимость обычного игрового взаимодействия.', src:'https://ria.ru/20251119/roblox-2055941148.html', srcName:'РИА Новости'},
+  {author:'Игорь Мурог', role:'член комитета Совета Федерации по науке и образованию', stance:'support', q:'Более эффективным подходом может стать введение временных рамок — например, ограничение экранного времени до одного-трёх часов в сутки.', src:'https://www.mentoday.ru/life/news/24-03-2026/cifrovye-nedorosli-v-rossii-mogut-zapretit-gadjety-detyam-do-opredelennogo-vozrasta/', srcName:'Men Today'},
+  {author:'Екатерина Мизулина', role:'директор Лиги безопасного интернета', stance:'critic', q:'Считаю, что это популизм. Любой запрет, вводимый законом, должен реализовываться на практике. Если так не происходит — это дискредитирует государство.', src:'https://klops.ru/other/2024-11-05/307939-mizulina-nazvala-populistami-obschestvennikov-kotorye-predlozhili-zapretit-detyam-polzovatsya-sotssetyami', srcName:'Клопс'},
+  {author:'Екатерина Мизулина', role:'директор Лиги безопасного интернета', stance:'critic', q:'Во многих семьях у нас нет гаджетов у каждого члена семьи. Ребёнок может пользоваться смартфоном родителей и наоборот.', src:'https://klops.ru/other/2024-11-05/307939-mizulina-nazvala-populistami-obschestvennikov-kotorye-predlozhili-zapretit-detyam-polzovatsya-sotssetyami', srcName:'Клопс'},
+  {author:'Денис Кусков', role:'гендиректор TelecomDaily', stance:'support', q:'Есть возможность верификации через «Госуслуги»: те, кто получил паспорт с 14 лет, заводят аккаунты, и они используются при авторизации на площадках.', src:'https://nsn.fm/society/kuskov-predlozhil-identifitsirovat-vozrast-na-onlain-platformah-cherez-gosuslugi', srcName:'НСН'},
+  {author:'Ирина Покусаева', role:'детский психолог', stance:'support', q:'Если дети, как сейчас, могут полтора-два часа сидеть в гаджетах, это недопустимо — это даже в шесть-семь лет перебор.', src:'https://spbdnevnik.ru/news/2024-12-06/irina-pokusaeva-obyasnila-pochemu-gadzhety-nuzhno-zapretit-dlya-detey', srcName:'Петербургский дневник'},
+  {author:'Резеда Шигабутдинова', role:'невролог, детская больница №8, Казань', stance:'support', q:'Идёт негативное воздействие на зоны головного мозга — например, на префронтальную кору: страдает умение принимать решения и просчитывать действия наперёд.', src:'https://russian.rt.com/russia/news/1645111-vrach-deti-gadzhety', srcName:'RT на русском'},
+  {author:'Людмила Авдеева', role:'руководитель психслужбы московской школы №58', stance:'critic', q:'Любой тотальный запрет, особенно для подростка, лишь повысит привлекательность этой области. Тинейджеры весьма креативны по части нарушения правил.', src:'https://rg.ru/2024/11/21/psiholog-avdeeva-totalnyj-zapret-na-socseti-lish-silnee-privlechet-podrostkov.html', srcName:'Российская газета'},
+  {author:'Дарья Дугенцова', role:'психолог', stance:'critic', q:'Когда ребёнок входит в пубертат (примерно 12 лет), ему необходима принадлежность к группе — важно пользоваться интернетом и состоять в группах по интересам.', src:'https://aif.ru/society/psiholog-dugencova-zapret-na-socseti-usilit-interes-podrostkov-k-nim', srcName:'Аргументы и факты'},
+  {author:'Надежда Резенова', role:'психолог', stance:'critic', q:'Когда мы ставим запреты, для подростков это как красная тряпка. Они будут искать варианты, как нарушить запрет, даже если родители ставят пароли.', src:'https://woman.rambler.ru/children/56629369-psiholog-sravnila-s-krasnoy-tryapkoy-zapret-sotssetey-dlya-detey/', srcName:'ТК «Звезда» / Рамблер'},
+  {author:'Надежда Резенова', role:'психолог', stance:'neutral', q:'Участки, отвечающие за поведение человека, окончательно развиваются примерно к 25 годам. Поэтому возраст 14–16 лет вполне обоснован с точки зрения физиологии.', src:'https://woman.rambler.ru/children/56629369-psiholog-sravnila-s-krasnoy-tryapkoy-zapret-sotssetey-dlya-detey/', srcName:'ТК «Звезда» / Рамблер'},
+  {author:'Алексей Мунтян', role:'эксперт по приватности', stance:'critic', q:'Внедрение биометрии или загрузки скан-копий документов — тяжеловесное решение и может создать серьёзные риски утечки персональных данных.', src:'https://www.kommersant.ru/doc/8727183', srcName:'Коммерсантъ'},
+  {author:'Родион Чепалов', role:'психолог', stance:'critic', q:'У части подростков признаки компульсивного использования: обещал «на 10 минут» и исчез на час, падает успеваемость, ухудшается сон, растёт раздражительность без телефона.', src:'https://www.vokrugsveta.ru/mnenie/zapretit-nelzya-nauchit-stoit-li-ogranichivat-socseti-dlya-detei-i-podrostkov-i-kakie-est-alternativy-id6845875/', srcName:'Вокруг света'},
+  {author:'Роман Устинов', role:'врач-психотерапевт', stance:'critic', q:'Договорённость лучше запрета. Но она сложнее и требует постоянного наблюдения. На государственном уровне запретить проще, чем что-то менять.', src:'https://www.vokrugsveta.ru/mnenie/zapretit-nelzya-nauchit-stoit-li-ogranichivat-socseti-dlya-detei-i-podrostkov-i-kakie-est-alternativy-id6845875/', srcName:'Вокруг света'},
+  {author:'Ксения Мосунова', role:'клинический психолог', stance:'critic', q:'Вы же не даёте ребёнку нож или утюг без беседы, как пользоваться безопасно? Так и с соцсетями: сначала научить, потом присматривать, потом — в «свободное плавание».', src:'https://www.vokrugsveta.ru/mnenie/zapretit-nelzya-nauchit-stoit-li-ogranichivat-socseti-dlya-detei-i-podrostkov-i-kakie-est-alternativy-id6845875/', srcName:'Вокруг света'},
+  {author:'Иван Смирнов', role:'директор экосистемных сервисов VK', stance:'neutral', q:'Запуск «Детского профиля» — первый шаг в развитии VK ID для юных пользователей: единый аккаунт для всей экосистемы, а родители могут не беспокоиться о безопасности.', src:'https://www.cnews.ru/news/line/2025-04-10_bezopasnost_i_personalnye', srcName:'CNews'},
+  {author:'ВЦИОМ', role:'опрос', stance:'neutral', q:'84% за обязательное подтверждение возраста, 83% — за ограничение «затягивающего» контента, 76% — за согласие родителей для аккаунта несовершеннолетнего.', src:'https://news.ru/society/vciom-vyyasnil-kak-rossiyane-otnosyatsya-k-zapretu-socsetej-do-15-let', srcName:'News.ru'},
+  {author:'ВЦИОМ', role:'опрос', stance:'neutral', q:'43% опрошенных — за ограничение доступа к соцсетям до 16–18 лет, ещё 38% считают целесообразным запрет до 13–15 лет.', src:'https://news.ru/society/vciom-vyyasnil-kak-rossiyane-otnosyatsya-k-zapretu-socsetej-do-15-let', srcName:'News.ru'},
+  {author:'SuperJob', role:'опрос родителей', stance:'neutral', q:'Среди родителей детей 7–15 лет: 52% соглашаются с необходимостью запрета соцсетей подросткам, 26% — против.', src:'https://www.superjob.ru/research/articles/115370/zapret-socsetej-dlya-podrostkov-podderzhivaet-kazhdyj-vtoroj-roditel/', srcName:'SuperJob'},
+  {author:'SuperJob', role:'опрос', stance:'neutral', q:'Ограничение мобильных телефонов на уроках одобряют 83% родителей и 86% учителей. Против запрета — только 9% родителей.', src:'https://www.pravmir.ru/opros-83-rossijskih-roditelej-odobryayut-zapret-mobilnyh-telefonov-v-shkolah/', srcName:'Правмир'},
+  {author:'«Комсомольская правда»', role:'опрос', stance:'neutral', q:'88% жителей России поддерживают идею ограничения доступа детей к соцсетям. Противоположного мнения — 11%.', src:'https://www.amic.ru/news/podavlyayuschee-bolshinstvo-rossiyan-vyskazali-za-ogranichenie-socsetey-dlya-podrostkov-577403', srcName:'ИА Амител (по КП)'},
+  {author:'Skysmart', role:'опрос школьников', stance:'neutral', q:'Полностью отказаться от соцсетей и гаджетов летом планируют лишь 5% школьников; большинство (62%) не планируют ограничивать соцсети.', src:'https://tass.ru/obschestvo/27862671', srcName:'ТАСС'},
+  {author:'«Лаборатория Касперского»', role:'опрос родителей', stance:'neutral', q:'63,4% родителей защищают детей в цифровой среде. За год число тех, кто ограничивает время за гаджетами, снизилось с 41% до 33,5%.', src:'https://online47.ru/2025/06/01/issledovanie-bolshe-poloviny-rossiyan-starayutsya-ogradit-detey-ot-ispolzovaniya-gadzhetov-215594', srcName:'Online47'},
+  {author:'Russian Field', role:'опрос подростков 14–17 лет', stance:'neutral', q:'Блокировки вызывают «гнев» у 46% подростков, «плач» — у 15%.', src:'https://meduza.io/feature/2026/04/22/obhod-blokirovok-dlya-moego-pokoleniya-uzhe-bazovyy-navyk', srcName:'Meduza'},
+  {author:'Родитель (опрос SuperJob)', role:'против запрета', stance:'critic', q:'Если ввести запрет, дети всё равно будут сидеть в соцсетях, но тайно. И вот тогда контролировать станет намного сложнее.', src:'https://www.superjob.ru/research/articles/115370/zapret-socsetej-dlya-podrostkov-podderzhivaet-kazhdyj-vtoroj-roditel/', srcName:'SuperJob'},
+  {author:'Родитель (опрос SuperJob)', role:'за запрет', stance:'support', q:'В соцсетях есть риск завести знакомство с ненужными людьми. Вместо учёбы они зависают в соцсетях.', src:'https://www.superjob.ru/research/articles/115370/zapret-socsetej-dlya-podrostkov-podderzhivaet-kazhdyj-vtoroj-roditel/', srcName:'SuperJob'},
+  {author:'Мама девятиклассницы', role:'мать школьницы, Москва', stance:'critic', q:'Моя дочь вечерами дома, и моё сердце спокойно. А если соцсетей не будет, не случится ли ренессанса подворотен из молодости тех, кто рос в 90-е?', src:'https://www.mk.ru/social/2026/01/22/nas-zhdet-renessans-podvoroten-roditeli-usomnilis-v-polze-zapreta-socsetey-dlya-podrostkov.html', srcName:'Московский комсомолец'},
+  {author:'Мама семиклассника', role:'мать школьника, Москва', stance:'critic', q:'Мне иногда даже жутковато от умений сыночка! Он говорит: мама, не беспокойся, ни одной надёжной блокировки ещё не изобрели!', src:'https://www.mk.ru/social/2026/01/22/nas-zhdet-renessans-podvoroten-roditeli-usomnilis-v-polze-zapreta-socsetey-dlya-podrostkov.html', srcName:'Московский комсомолец'},
+  {author:'Елена Тищенко', role:'бывший учитель русского языка, Владимирская обл.', stance:'support', q:'Урок — это 40 минут образовательного процесса, где телефон не требуется. Поэтому нужно как-то это ограничивать.', src:'https://6tv.ru/mobilnye-telefony-v-shkolax-u-detej-neizbezhnost-progressa-ili-vred-uchebnomu-processu', srcName:'Шестой канал'},
+  {author:'Зоя Рунова', role:'бывший учитель русского языка, Владимирская обл.', stance:'critic', q:'Я бы не поддержала: техника, прогресс — этим надо пользоваться. Интернет — зло? Телефон — зло? Можно же использовать во благо.', src:'https://6tv.ru/mobilnye-telefony-v-shkolax-u-detej-neizbezhnost-progressa-ili-vred-uchebnomu-processu', srcName:'Шестой канал'},
+  {author:'Анастасия Володина', role:'бывший учитель английского, Владимирская обл.', stance:'neutral', q:'Они не вправе пользоваться телефоном на занятиях, но мы не вправе их отбирать. Если телефон лежит на парте и ребёнок его не трогает — почему нет?', src:'https://6tv.ru/mobilnye-telefony-v-shkolax-u-detej-neizbezhnost-progressa-ili-vred-uchebnomu-processu', srcName:'Шестой канал'},
+  {author:'Елизавета', role:'школьница, 16 лет, Москва', stance:'child', q:'Думаешь не об учёбе, а о том, как добраться до нужной информации. Телеграм и прочие сервисы — это уже минимум, которым мы пользуемся каждый день.', src:'https://meduza.io/feature/2026/04/22/obhod-blokirovok-dlya-moego-pokoleniya-uzhe-bazovyy-navyk', srcName:'Meduza («Берег»)'},
+];
+
 // {author, role, country (англ. ключ страны или 'global'), stance, q, src, srcName}
 // Реальные высказывания; формулировки приведены по публикациям СМИ и переводам, каждое со ссылкой.
 const QUOTES = [
@@ -932,6 +1060,42 @@ const QUOTES = [
   {author:'Антон Горелкин', role:'Первый зампред комитета Госдумы по информполитике', country:'Russia', stance:'critic', q:'Инициативы, подобные австралийским, в Госдуме сейчас не прорабатываются, а медийный шум вокруг отдельных заявлений совершенно не оправдан.', src:'https://www.fontanka.ru/2025/12/22/76184264/', srcName:'Фонтанка'},
   {author:'Нина Останина', role:'Председатель комитета Госдумы по защите семьи', country:'Russia', stance:'official', q:'Обсуждать надо не только соцсети, но и доступ детей до 14 лет в интернет в целом — по логике «до получения паспорта».', src:'https://ria.ru/20251222/gosduma-2063943642.html', srcName:'РИА Новости'},
   {author:'Надежда Резенова', role:'Психолог', country:'Russia', stance:'critic', q:'Когда мы ставим запреты, для подростков это как красная тряпка. Они будут искать варианты, как их нарушить.', src:'https://tvzvezda.ru/news/2026619956-qmQh0.html', srcName:'Телеканал «Звезда»'},
+
+  // — голоса простых граждан и подростков (по странам) —
+  {author:'Эзра Шолл', role:'школьник, 15 лет', country:'Australia', stance:'child', q:'Соцсети заполнили пустоту в моей социальной жизни: дали возможность оставаться с друзьями, заводить новых и чувствовать связь с миром.', src:'https://www.pbs.org/newshour/show/how-australias-pioneering-social-media-ban-is-impacting-teens', srcName:'PBS NewsHour'},
+  {author:'Ашер Патрикиос', role:'школьник, 13 лет', country:'Australia', stance:'child', q:'Толку особо нет — я просто нахожу обходной путь.', src:'https://www.pbs.org/newshour/show/how-australias-pioneering-social-media-ban-is-impacting-teens', srcName:'PBS NewsHour'},
+  {author:'Лорен Долежал', role:'мать школьника', country:'Australia', stance:'support', q:'Мне стало проще говорить ребёнку «нет» — ведь теперь сидеть в соцсетях ему просто против закона.', src:'https://www.pbs.org/newshour/show/how-australias-pioneering-social-media-ban-is-impacting-teens', srcName:'PBS NewsHour'},
+  {author:'Таня Шорт', role:'драматерапевт, мать троих детей', country:'Australia', stance:'support', q:'Родители детей десяти лет и младше очень благодарны за это — я прекрасно вижу пользу запрета.', src:'https://abcnews.go.com/GMA/Family/australias-social-media-ban-kids-16-effect/story?id=128243002', srcName:'ABC News'},
+  {author:'Эми', role:'школьница, 14 лет', country:'Australia', stance:'child', q:'Раньше после школы я звонила друзьям в Snapchat, а теперь не могу — и пошла на пробежку. Я чувствую себя свободной.', src:'https://www.cnbc.com/2026/01/15/australias-social-media-ban-for-teens-how-its-going.html', srcName:'CNBC'},
+  {author:'Елена', role:'школьница', country:'United States of America', stance:'child', q:'Если они принимают закон, который напрямую касается определённой группы, они должны понимать её опыт и взгляд.', src:'https://kutv.com/news/local/teens-talk-about-utahs-effort-to-reduce-social-media-impact-on-mental-health-cell-phone-ban-governor-spencer-cox-teenagers', srcName:'KUTV'},
+  {author:'Джейси', role:'школьник', country:'United States of America', stance:'child', q:'Я обожаю соцсети. Знаю, что есть вредные эффекты, но чувствую, что благодаря им могу общаться с людьми.', src:'https://kutv.com/news/local/teens-talk-about-utahs-effort-to-reduce-social-media-impact-on-mental-health-cell-phone-ban-governor-spencer-cox-teenagers', srcName:'KUTV'},
+  {author:'Элисс Менгасон', role:'мать школьницы', country:'United States of America', stance:'critic', q:'Это немного навязчиво. Мы с мужем сами можем принимать такие решения. Это нам учить ребёнка отличать хорошее от плохого.', src:'https://www.today.com/parents/parents/utah-law-parents-teens-social-media-use-rcna76566', srcName:'TODAY'},
+  {author:'Хосе', role:'школьник, 16 лет', country:'United States of America', stance:'child', q:'В таком возрасте соцсети не так уж важны. Ты ещё ребёнок — просто радуйся жизни.', src:'https://www.wctv.tv/2025/01/02/tallahassee-families-react-child-social-media-ban-takes-effect-florida/', srcName:'WCTV'},
+  {author:'Питер', role:'отец, Флорида', country:'United States of America', stance:'support', q:'Вы же не отпустите ребёнка одного за пределы района без разрешения — так зачем давать ему открытый доступ к сети?', src:'https://www.wctv.tv/2025/01/02/tallahassee-families-react-child-social-media-ban-takes-effect-florida/', srcName:'WCTV'},
+  {author:'Дамарис', role:'мать маленького сына, Флорида', country:'United States of America', stance:'critic', q:'Дети так подкованы в технологиях, что найдут способ обойти запрет — я не уверена, насколько он вообще исполним.', src:'https://www.nbcmiami.com/news/local/parents-on-floridas-new-social-media-ban-for-minors-and-the-challenges-it-faces/3501884/', srcName:'NBC Miami'},
+  {author:'Морган Макгуайр', role:'школьница, 17 лет', country:'United States of America', stance:'child', q:'Вредный контент, с которым молодёжь сталкивается в сети, не исчезает, когда тебе исполняется 18.', src:'https://www.texastribune.org/2025/05/19/texas-ban-minors-tiktok-facebook-snapchat-social-media/', srcName:'Texas Tribune'},
+  {author:'Виктор', role:'школьник, 11 лет', country:'France', stance:'child', q:'Мы здесь, чтобы развлекаться и общаться, так что телефон ни к чему.', src:'https://www.euronews.com/my-europe/2024/09/04/back-to-school-france-tests-smartphone-ban-in-200-middle-schools', srcName:'Euronews'},
+  {author:'Эмманюэль Пуэдра', role:'мать, потерявшая 15-летнего сына', country:'France', stance:'support', q:'TikTok знал, что ему плохо, TikTok ничего не сделал и TikTok не помогает нам узнать правду.', src:'https://www.thelocal.fr/20251210/downward-spiral-french-mother-blames-social-media-for-teens-suicide', srcName:'The Local France'},
+  {author:'Кие Линдфорс', role:'школьник, 15 лет', country:'Finland', stance:'child', q:'Я больше общаюсь с людьми. А ещё в школе есть комната с настолками — на переменах здорово ходить туда играть.', src:'https://www.france24.com/en/live-news/20250911-finnish-phone-ban-brings-focus-and-chatter-back-to-school', srcName:'France 24'},
+  {author:'Лотта Кнапас', role:'школьница', country:'Finland', stance:'child', q:'Я понимаю, что на уроках телефоны нельзя. Но мне кажется глупым, что их забирают на весь день.', src:'https://www.france24.com/en/live-news/20250911-finnish-phone-ban-brings-focus-and-chatter-back-to-school', srcName:'France 24'},
+  {author:'Феликс', role:'школьник', country:'Netherlands', stance:'child', q:'Люди больше разговаривают, ходят в магазины, а не сидят в столовой в телефонах. Связи между людьми стали лучше.', src:'https://nltimes.nl/2025/03/04/kids-social-schools-report-one-year-phone-ban-secondary-schools', srcName:'NL Times'},
+  {author:'Йерун Брон', role:'учитель экономики', country:'Netherlands', stance:'support', q:'На уроке вернулся «неловкий момент» — теперь ученикам приходится разговаривать друг с другом, а не хвататься за телефон.', src:'https://nltimes.nl/2025/03/04/kids-social-schools-report-one-year-phone-ban-secondary-schools', srcName:'NL Times'},
+  {author:'Боди Манган Гислер', role:'ученик начальной школы', country:'Ireland', stance:'child', q:'Может, попрошу маму: «Можно скачать одну игру?» Она скажет «да». А меня затянет.', src:'https://www.irishtimes.com/ireland/education/2026/02/28/you-dont-need-a-smartphone-to-be-cool-how-a-schools-ban-is-inspiring-pupils-worldwide/', srcName:'The Irish Times'},
+  {author:'Рэйчел Харпер', role:'директор начальной школы', country:'Ireland', stance:'support', q:'Это больше не обряд посвящения: к пятому-шестому классу телефон уже не обязателен, чтобы быть в «крутой компании».', src:'https://www.irishtimes.com/ireland/education/2026/02/28/you-dont-need-a-smartphone-to-be-cool-how-a-schools-ban-is-inspiring-pupils-worldwide/', srcName:'The Irish Times'},
+  {author:'Сиа Панагопулос', role:'учительница', country:'Greece', stance:'support', q:'Пора было ограничить телефоны у учеников хотя бы в школе. Многие буквально приклеены к экрану даже на уроке.', src:'https://english.news.cn/20240912/b1be5f255ba64d90859662ef2b864711/c.html', srcName:'Xinhua'},
+  {author:'Элизабет Гарсия Перманье', role:'мать троих детей, движение «Подростки без телефона»', country:'Spain', stance:'support', q:'Сын спрашивает: «Если у всех есть телефон, ты ведь тоже купишь?» Отвечаю: «Не волнуйся, я позабочусь, чтобы не у всех он был».', src:'https://es.ara.cat/misc/revuelta-movil-empezo-parque_130_4851500.html', srcName:'ARA'},
+  {author:'Хлоя Фьелструп-Маттисен', role:'школьница, 14 лет', country:'Denmark', stance:'child', q:'Видео было повсюду в соцсетях. Я просто пошла в школу — и там его уже все видели.', src:'https://www.pbs.org/newshour/world/denmarks-government-aims-to-ban-access-to-social-media-for-children-aged-under-15', srcName:'PBS NewsHour'},
+  {author:'Анне Метте Торхауге', role:'доцент Копенгагенского университета', country:'Denmark', stance:'critic', q:'Для многих детей соцсети — то же, чем для моего поколения было телевидение. Это способ быть частью общества.', src:'https://www.pbs.org/newshour/world/denmarks-government-aims-to-ban-access-to-social-media-for-children-aged-under-15', srcName:'PBS NewsHour'},
+  {author:'Квентин Гертнер', role:'представитель Федеральной конференции школьников', country:'Germany', stance:'critic', q:'Федеральная конференция школьников чётко выступает против сплошного запрета смартфонов в школах.', src:'https://www.bpb.de/themen/bildung/dossier-bildung/570845/handynutzung-an-schulen-erlauben-das-denken-jugendliche/', srcName:'bpb.de'},
+  {author:'Иэн Расселл', role:'отец Молли Расселл, погибшей девочки', country:'United Kingdom', stance:'support', q:'Лучшее решение этой сложной проблемы — регулирование, а не запреты, которые наказывали бы детей за провал техногигантов.', src:'https://www.lbc.co.uk/article/4c9399995e954f05a802806e20417052-5Hjcm82_2/', srcName:'LBC'},
+  {author:'Эстер Гай', role:'мать убитой девочки Брианны Гай', country:'United Kingdom', stance:'support', q:'Брианне это очень помогло бы — помогло бы сосредоточиться на учёбе. Все её проблемы крутились вокруг телефона.', src:'https://www.itv.com/news/granada/2024-02-04/brianna-gheys-mum-calls-for-ban-on-social-media-apps-for-under-16s', srcName:'ITV News'},
+  {author:'Дэйзи Гринуэлл', role:'сооснователь движения «Детство без смартфона»', country:'United Kingdom', stance:'support', q:'Мы потрясены тем, как всего за три недели это разрослось от нас двоих до тысяч родителей по всей стране.', src:'https://www.cnbc.com/2024/07/17/a-smartphone-free-childhood-a-global-movement-is-growing.html', srcName:'CNBC'},
+  {author:'Тони Джукич', role:'отец школьницы', country:'Canada', stance:'critic', q:'Телефон был для неё спасательным кругом: она могла написать нам, и мы приезжали и забирали её из небезопасных ситуаций.', src:'https://www.cbc.ca/news/canada/canadian-schools-cell-phone-bans-1.6869993', srcName:'CBC News'},
+  {author:'Эмили', role:'школьница, выпускной класс', country:'New Zealand', stance:'child', q:'В реальном мире запрета на телефоны нет. На работе, в университете нам нужно будет уметь распределять время самим.', src:'https://www.1news.co.nz/2024/09/27/five-months-into-the-school-phone-ban-heres-how-students-are-finding-it/', srcName:'1News'},
+  {author:'Джаярадха Вирасами', role:'мать двоих детей (12 и 15 лет)', country:'Malaysia', stance:'support', q:'Родители боятся, что детям станет скучно. Но скука — это хорошо: тогда они начинают мыслить нестандартно.', src:'https://www.nbcnews.com/world/asia/malaysia-enforces-ban-social-media-accounts-children-younger-16-rcna347823', srcName:'NBC News'},
+  {author:'Аадхаван Сараванан', role:'школьник, 15 лет', country:'Malaysia', stance:'child', q:'Соцсети — это роскошь, а не необходимость.', src:'https://www.nbcnews.com/world/asia/malaysia-enforces-ban-social-media-accounts-children-younger-16-rcna347823', srcName:'NBC News'},
+  {author:'Шон Хью', role:'отец двоих детей', country:'Malaysia', stance:'critic', q:'Боюсь, что резкое отключение от соцсетей подтолкнёт детей искать нерегулируемые способы обойти эти правила.', src:'https://www.nbcnews.com/world/asia/malaysia-enforces-ban-social-media-accounts-children-younger-16-rcna347823', srcName:'NBC News'},
+  {author:'Фелипе Брессаним («Felca»)', role:'блогер, кампания за защиту детей в сети', country:'Brazil', stance:'support', q:'Если бы было искреннее уважение к детям, сами соцсети бы адаптировались.', src:'https://www.terra.com.br/noticias/educacao/se-houvesse-respeito-genuino-pelas-criancas-as-proprias-redes-sociais-se-adaptariam-diz-felca,7dbf4b007968ab78b78c16ee2803ad4dfycbwugj.html', srcName:'Terra'},
 ];
 
 const COUNTRIES = [
@@ -1379,6 +1543,36 @@ function renderCountryVoices(c){
   io2.observe(sec);
 
   build();
+})();
+
+/* ---------------- RUSSIA QUOTES BLOCK ---------------- */
+(function initRuQuotes(){
+  const wrap=document.getElementById('ruq');
+  const grid=document.getElementById('ruq-grid');
+  const more=document.getElementById('ruq-more');
+  if(!RU_QUOTES.length){ wrap.hidden=true; return; }
+  wrap.hidden=false;
+  const n=RU_QUOTES.length, d=n%10, dd=n%100;
+  const word=(d===1&&dd!==11)?'мнение':((d>=2&&d<=4)&&!(dd>=12&&dd<=14))?'мнения':'мнений';
+  document.getElementById('ruq-n').textContent=`${n} ${word}`;
+  grid.innerHTML=RU_QUOTES.map(q=>{
+    const s=STANCE[q.stance]||{ru:'',color:'var(--ink-3)'};
+    return `<figure class="ruqc" style="--c:${s.color}">
+      <span class="ruqc__stance">${s.ru}</span>
+      <blockquote>«${esc(q.q)}»</blockquote>
+      <figcaption><b>${esc(q.author)}</b><span>${esc(q.role)}</span><a href="${q.src}" target="_blank" rel="noopener">${esc(q.srcName)} ↗</a></figcaption>
+    </figure>`;
+  }).join('');
+  // показать все / свернуть — по количеству (надёжнее измерения высоты)
+  if(RU_QUOTES.length>12){
+    more.hidden=false;
+    more.onclick=()=>{
+      const collapsed=grid.classList.toggle('is-collapsed');
+      more.textContent=collapsed?'Показать все ↓':'Свернуть ↑';
+    };
+  } else {
+    grid.classList.remove('is-collapsed');
+  }
 })();
 
 /* ---------------- REVEAL ON SCROLL ---------------- */
