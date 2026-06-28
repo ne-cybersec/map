@@ -249,7 +249,8 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .mapsec__head h2 { font-size: clamp(1.4rem, 3vw, 2rem); }
 .mapsec__head p { color: var(--ink-3); font-size: 0.9rem; max-width: 40ch; }
 
-.controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.7rem; align-items: center; }
+.filters__label { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3); margin-right: 0.15rem; }
 .chip {
   font-family: var(--mono); font-size: 0.78rem;
   padding: 0.46rem 0.85rem; border-radius: 999px;
@@ -954,11 +955,23 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
       </div>
 
       <div class="controls" id="filters" role="group" aria-label="Фильтр по статусу">
+        <span class="filters__label">Статус:</span>
         <button class="chip" data-filter="all" aria-pressed="true">Все</button>
         <button class="chip" data-filter="enacted" aria-pressed="false"><span class="swatch" style="background:oklch(0.75 0.02 264)"></span>Действует <span class="count" data-c="enacted"></span></button>
         <button class="chip" data-filter="proposed" aria-pressed="false"><span class="swatch" style="background:transparent;border:1px dashed oklch(0.75 0.02 264)"></span>На рассмотрении <span class="count" data-c="proposed"></span></button>
         <button class="chip" data-filter="reco" aria-pressed="false"><span class="swatch" style="background:transparent;border:1px dotted oklch(0.6 0.02 264)"></span>Рекомендация <span class="count" data-c="reco"></span></button>
         <button class="chip" data-filter="discussion" aria-pressed="false"><span class="swatch" style="background:var(--status-discussion);opacity:0.5"></span>Закона нет · спорят <span class="count" data-c="discussion"></span></button>
+      </div>
+      <div class="controls" id="filters-regime" role="group" aria-label="Фильтр по типу меры">
+        <span class="filters__label">Тип меры:</span>
+        <button class="chip" data-regime="all" aria-pressed="true">Все</button>
+        <button class="chip" data-regime="ban" aria-pressed="false"><span class="swatch" style="background:var(--age-18)"></span>Запрет <span class="count" data-cr="ban"></span></button>
+        <button class="chip" data-regime="consent" aria-pressed="false"><span class="swatch" style="background:var(--age-15)"></span>Согласие <span class="count" data-cr="consent"></span></button>
+        <button class="chip" data-regime="time" aria-pressed="false"><span class="swatch" style="background:var(--age-14)"></span>Лимиты времени <span class="count" data-cr="time"></span></button>
+        <button class="chip" data-regime="school" aria-pressed="false"><span class="swatch" style="background:var(--no-age)"></span>Школы <span class="count" data-cr="school"></span></button>
+        <button class="chip" data-regime="platform" aria-pressed="false"><span class="swatch" style="background:var(--no-age)"></span>Платформы <span class="count" data-cr="platform"></span></button>
+        <button class="chip" data-regime="reco" aria-pressed="false"><span class="swatch" style="background:transparent;border:1px dotted var(--ink-3)"></span>Рекомендации <span class="count" data-cr="reco"></span></button>
+        <button class="chip" data-regime="discussion" aria-pressed="false"><span class="swatch" style="background:var(--status-discussion);opacity:0.5"></span>Споры <span class="count" data-cr="discussion"></span></button>
       </div>
 
       <div class="mapframe" id="mapframe">
@@ -1922,6 +1935,11 @@ function animateCount(el, target){
   const el = document.querySelector(`[data-c="${s}"]`);
   if(el) el.textContent = n;
 });
+['ban','consent','time','school','platform','reco','discussion'].forEach(rg=>{
+  const n = COUNTRIES.filter(c=>c.regime===rg).length;
+  const el = document.querySelector(`[data-cr="${rg}"]`);
+  if(el) el.textContent = n;
+});
 
 const ramp = document.getElementById('ramp');
 [13,14,15,16,18].forEach(a=>{
@@ -1975,7 +1993,7 @@ const frame=document.getElementById('mapframe');
 const state=document.getElementById('mapstate');
 const tip=document.getElementById('tip');
 let svg,g,projection,path,zoom,W,H, countryNodes;
-let activeFilter='all', currentKey=null;
+let activeFilter='all', activeRegime='all', currentKey=null;
 
 const MAP_URL="https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -2121,10 +2139,17 @@ document.getElementById('filters').addEventListener('click',e=>{
   document.querySelectorAll('#filters .chip').forEach(b=>b.setAttribute('aria-pressed', String(b===btn)));
   applyFilter();
 });
+document.getElementById('filters-regime').addEventListener('click',e=>{
+  const btn=e.target.closest('.chip'); if(!btn) return;
+  activeRegime=btn.dataset.regime;
+  document.querySelectorAll('#filters-regime .chip').forEach(b=>b.setAttribute('aria-pressed', String(b===btn)));
+  applyFilter();
+});
 function applyFilter(){
   if(!countryNodes) return;
   countryNodes.filter(d=>byKey.has(d.properties.name))
-    .classed('is-dim', d=> activeFilter!=='all' && byKey.get(d.properties.name).status!==activeFilter);
+    .classed('is-dim', d=>{ const c=byKey.get(d.properties.name);
+      return (activeFilter!=='all' && c.status!==activeFilter) || (activeRegime!=='all' && c.regime!==activeRegime); });
 }
 
 /* ---- Drawer ---- */
