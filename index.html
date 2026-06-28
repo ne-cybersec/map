@@ -257,6 +257,10 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .stat__num.is-total { color: var(--age-14); }
 .stat__label { font-size: 0.92rem; color: var(--ink-2); line-height: 1.3; }
 .stat__label span { display: block; color: var(--ink-3); font-size: 0.8rem; }
+/* Лид-цифра (принятые запреты) — крупнее: иерархия вместо трёх равновесных метрик */
+.stat--lead { padding-block: 1.15rem; }
+.stat--lead .stat__num { font-size: clamp(2.7rem, 6.4vw, 3.9rem); }
+.stat--lead .stat__label { font-size: 1rem; color: var(--ink); }
 
 /* ============================================================
    MAP MODULE
@@ -343,7 +347,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 }
 .tip.is-on { opacity: 1; transform: translateY(0) scale(1); }
 .tip__name { color: var(--ink); font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem; }
-.tip__age { font-family: var(--mono); font-weight: 700; font-size: 1.05rem; }
+.tip__age { font-family: var(--mono); font-weight: 700; font-size: 1.05rem; color: var(--c, var(--ink)); }
 .tip__line { font-size: 0.78rem; color: var(--ink-3); margin-top: 0.35rem; }
 .tip__status { display: inline-block; font-family: var(--mono); font-size: 0.68rem; margin-top: 0.45rem; padding: 0.12rem 0.45rem; border-radius: 5px; border: 1px solid var(--line); color: var(--ink-2); }
 
@@ -394,6 +398,7 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
 .drawer__age {
   font-family: var(--mono); font-weight: 700; line-height: 0.9;
   font-size: 4.5rem; letter-spacing: -0.04em;
+  color: var(--c, var(--ink));
 }
 .drawer__age small { font-size: 1rem; font-weight: 500; color: var(--ink-3); letter-spacing: 0; }
 .drawer__name { font-size: 1.6rem; font-weight: 800; color: var(--ink); margin-top: 0.1rem; letter-spacing: -0.02em; }
@@ -780,6 +785,30 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
   .rtable .hide-sm { display: none; }
   .rrow td { padding: 0.7rem 0.5rem; }
 }
+/* ≤520px: таблица переразбивается в карточки-строки (возраст-чип слева, страна + статус справа),
+   чтобы не было горизонтального переполнения вьюпорта. JS/клики не меняются. */
+@media (max-width: 520px) {
+  .rtable, .rtable tbody { display: block; width: 100%; }
+  .rtable thead { display: none; }
+  .rrow { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "age name" "age status"; align-items: center; column-gap: 0.9rem; row-gap: 0.18rem; padding: 0.75rem 0.15rem; }
+  .rrow > td { display: block; padding: 0; border: none; vertical-align: initial; }
+  .rrow > td:nth-child(1), .rrow > td:nth-child(4), .rrow > td:nth-child(6) { display: none; }
+  .rrow > td:nth-child(3) { grid-area: age; }
+  .rrow > td:nth-child(2) { grid-area: name; }
+  .rrow > td.c-status { grid-area: status; white-space: normal; }
+  .rrow .agechip { width: 2.7rem; height: 2.7rem; font-size: 1.1rem; }
+  .rrow .c-name { font-size: 1.02rem; }
+}
+/* Сенсорный ввод: увеличиваем зоны нажатия до ~44px (десктоп-мышь не затрагивается). */
+@media (pointer: coarse) {
+  .theme-toggle { width: 40px; height: 40px; }
+  .topnav a { padding-block: 0.6rem; }
+  .chip { padding-block: 0.56rem; }
+  .drawer__close { width: 44px; height: 44px; }
+  .ruq__navbtn { width: 44px; height: 44px; }
+  .ramp button { height: 40px; }
+  .usa__more > summary { padding-block: 0.85rem; }
+}
 
 /* ============================================================
    FOOTER
@@ -909,6 +938,19 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
 :root[data-theme="light"] .drawer { box-shadow: -30px 0 80px -30px oklch(0 0 0 / 0.22); }
 :root[data-theme="light"] .mapframe, :root[data-theme="light"] .qviewport { box-shadow: 0 24px 60px -40px oklch(0 0 0 / 0.25), inset 0 1px 0 oklch(1 0 0 / 0.5); }
 :root[data-theme="light"] ::selection { background: oklch(0.80 0.15 62 / 0.30); color: var(--ink); }
+/* Светлая тема: акцентные age/stance-цвета как ТЕКСТ затемняются (сохраняя оттенок) для контраста AA;
+   заливки/точки/карта используют яркие цвета как раньше. */
+:root[data-theme="light"] .drawer__age { color: color-mix(in oklch, var(--c, var(--ink)), black 40%); }
+:root[data-theme="light"] .tip__age { color: color-mix(in oklch, var(--c, var(--ink)), black 42%); }
+:root[data-theme="light"] .qcard__chip,
+:root[data-theme="light"] .voice__stance,
+:root[data-theme="light"] .ruqc__stance {
+  color: color-mix(in oklch, var(--c, var(--ink-2)), black 44%);
+  border-color: color-mix(in oklch, var(--c, var(--line)), black 26%);
+  background: color-mix(in oklch, var(--c, transparent) 12%, transparent);
+}
+:root[data-theme="light"] .tl__ev:hover .tl__country,
+:root[data-theme="light"] .tl__ev:focus-visible .tl__country { color: color-mix(in oklch, var(--c, var(--ink)), black 42%); }
 </style>
 </head>
 <body>
@@ -980,7 +1022,7 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
         <p class="hero__dek">За два года мир развернулся к экранам спиной. От Австралии до Норвегии правительства устанавливают возрастной порог для социальных сетей и смартфонов. <b>Наведите на страну</b>, чтобы увидеть, с какого возраста и насколько строго.</p>
       </div>
       <div class="stats" aria-label="Ключевые цифры">
-        <div class="stat">
+        <div class="stat stat--lead">
           <span class="stat__num is-ban" data-count="0" id="stat-ban">0</span>
           <span class="stat__label">страны: прямой запрет соцсетей <b>принят</b><span>Австралия, Турция, ОАЭ, Малайзия, Индонезия, Габон</span></span>
         </div>
@@ -1001,7 +1043,6 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     <div class="wrap">
       <div class="mapsec__head reveal">
         <div>
-          <span class="eyebrow">Интерактивная карта</span>
           <h2>Возрастной порог по странам</h2>
         </div>
         <p>Цвет — возраст, с которого снимаются ограничения; серый — мера без возрастного порога (школы, классификация). Заливка — закон действует; пунктир — на рассмотрении; контур — рекомендация; фиолетовый — закона нет, идут споры.</p>
@@ -1063,7 +1104,6 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
   <section class="types">
     <div class="wrap">
       <div class="types__intro reveal">
-        <span class="eyebrow">Как читать карту</span>
         <h2>«Запрет» означает разное</h2>
         <p>За одинаковыми заголовками в новостях скрываются <b>четыре</b> очень разных механизма. Карта различает их — иначе сравнивать страны бессмысленно.</p>
       </div>
@@ -1112,7 +1152,6 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
     <div class="wrap">
       <div class="quotes__head reveal">
         <div>
-          <span class="eyebrow">Голоса</span>
           <h2>Что об этом говорят</h2>
         </div>
         <p>Политики, критики, родители и сами подростки — реальные высказывания со ссылками на источник. Листайте свайпом или стрелками.</p>
@@ -1139,7 +1178,6 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
   <section class="tl" id="timeline">
     <div class="wrap">
       <div class="tl__head reveal">
-        <span class="eyebrow">Хронология</span>
         <h2>Как мир пришёл к запретам</h2>
         <p>От первого закона о детских данных (<b>США, COPPA, 1998</b>) до волны запретов 2024–2026. Прокрутите ленту вбок; нажмите событие — откроется карточка страны.</p>
       </div>
@@ -1274,7 +1312,6 @@ html.intro-on .intro__skip { animation: introFade 0.5s ease 1.4s forwards; }
   <section class="ranking" id="ranking">
     <div class="wrap">
       <div class="ranking__head reveal">
-        <span class="eyebrow">Полный список</span>
         <h2>Все страны и пороги</h2>
         <p>Отсортировано по возрасту. Нажмите на строку — откроется карточка с деталями, источником и мнениями жителей этой страны о запрете.</p>
       </div>
@@ -2487,7 +2524,7 @@ function showTip(e,c){
 function showTipStatic(c){ fillTip(c); tip.style.left='16px'; tip.style.top='16px'; tip.classList.add('is-on'); }
 function fillTip(c){
   tip.innerHTML=`
-    <div class="tip__name"><span class="tip__age" style="color:${colorFor(c)}">${ageText(c)}</span> ${c.ru}</div>
+    <div class="tip__name"><span class="tip__age" style="--c:${colorFor(c)}">${ageText(c)}</span> ${c.ru}</div>
     <div class="tip__line">${c.scope}</div>
     <span class="tip__status" style="border-color:${STATUS[c.status].color}66">${STATUS[c.status].ru} · ${c.year}</span>`;
 }
@@ -2541,7 +2578,7 @@ function openDrawer(key){
   currentKey=key;
   lastFocus=document.activeElement;
   document.getElementById('drawer-age').innerHTML = c.age==null ? `—<small> нет порога</small>` : `${c.age}<small> лет</small>`;
-  document.getElementById('drawer-age').style.color=colorFor(c);
+  document.getElementById('drawer-age').style.setProperty('--c', colorFor(c));
   document.getElementById('drawer-name').textContent=c.ru;
   const st=document.getElementById('drawer-status');
   st.innerHTML=`<span class="dot" style="background:${STATUS[c.status].color}"></span>${STATUS[c.status].ru}`;
