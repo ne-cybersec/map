@@ -2785,7 +2785,15 @@ function renderCountryVoices(c){
   const n=RU_QUOTES.length, d=n%10, dd=n%100;
   const word=(d===1&&dd!==11)?'мнение':((d>=2&&d<=4)&&!(dd>=12&&dd<=14))?'мнения':'мнений';
   document.getElementById('ruq-n').textContent=`${n} ${word}`;
-  track.innerHTML=RU_QUOTES.map(q=>{
+  // перемешиваем мнения и следим, чтобы первым не шёл комментарий министров (Кравцов/Шадаев)
+  const order=RU_QUOTES.slice();
+  for(let k=order.length-1;k>0;k--){ const j=Math.floor(Math.random()*(k+1)); [order[k],order[j]]=[order[j],order[k]]; }
+  const isMinisterLead=a=>/Кравцов|Шадаев/.test(a.author);
+  if(order.length>1 && isMinisterLead(order[0])){
+    const idx=order.findIndex(a=>!isMinisterLead(a));
+    if(idx>0){ [order[0],order[idx]]=[order[idx],order[0]]; }
+  }
+  track.innerHTML=order.map(q=>{
     const s=STANCE[q.stance]||{ru:'',color:'var(--ink-3)'};
     return `<figure class="ruqc" style="--c:${s.color}">
       <span class="ruqc__stance">${s.ru}</span>
