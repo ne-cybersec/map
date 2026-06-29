@@ -621,14 +621,15 @@ h1, h2, h3 { color: var(--ink); line-height: 1.04; font-weight: 800; letter-spac
   position: relative; overflow: hidden;
   border: 1px solid var(--line-soft); border-radius: 20px;
   background: radial-gradient(140% 130% at 50% 0%, oklch(0.24 0.035 285 / 0.55), transparent 62%), var(--bg-deep);
-  min-height: clamp(310px, 44vh, 430px);
+  min-height: clamp(280px, 40vh, 380px);
   touch-action: pan-y;
   box-shadow: 0 30px 80px -42px oklch(0 0 0 / 0.85), inset 0 1px 0 oklch(1 0 0 / 0.04);
   cursor: grab;
+  transition: height 0.32s var(--ease-quint);
 }
 .qviewport.is-grab { cursor: grabbing; }
 .qcard {
-  position: absolute; inset: 0; margin: 0;
+  position: absolute; top: 0; left: 0; right: 0; margin: 0;
   display: flex; flex-direction: column; gap: 1.3rem;
   padding: clamp(1.6rem, 5vw, 3.4rem);
   will-change: transform, opacity;
@@ -2729,6 +2730,7 @@ function renderCountryVoices(c){
       </div>`;
     vp.appendChild(next);
     const old=card; card=next;
+    vp.style.height = (next.offsetHeight + 3) + 'px';   // высота под текущую цитату (+бордюр; иначе длинный текст обрезается)
     countEl.textContent=`${pad(i+1)} / ${pad(pool.length)}`;
     if(reduceMotion || dir===0){
       if(old) old.remove();
@@ -2754,6 +2756,7 @@ function renderCountryVoices(c){
   filtersEl.addEventListener('click',e=>{ const b=e.target.closest('.chip'); if(!b)return; stopAuto();
     filter=b.dataset.q; filtersEl.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); build(); });
   vp.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'){stopAuto();go(1);} if(e.key==='ArrowLeft'){stopAuto();go(-1);} });
+  window.addEventListener('resize',()=>{ if(card) vp.style.height = (card.offsetHeight + 3) + 'px'; }, {passive:true});
 
   // swipe / drag
   let dragX=0, dragging=false, startX=0;
