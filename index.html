@@ -2843,7 +2843,21 @@ if(!reduceMotion){
   const byId=new Map(links.map(a=>[a.getAttribute('href').slice(1), a]));
   const secs=[...byId.keys()].map(id=>document.getElementById(id)).filter(Boolean);
   if(!secs.length) return;
-  const setActive=(id)=>links.forEach(a=>a.classList.toggle('is-active', a.getAttribute('href')==='#'+id));
+  const nav=document.getElementById('topnav');
+  // лента меню доезжает к активному пункту (когда меню прокручивается — на мобильном)
+  function centerActive(a){
+    if(!nav || nav.scrollWidth <= nav.clientWidth + 4) return;
+    const navRect=nav.getBoundingClientRect(), aRect=a.getBoundingClientRect();
+    const delta=(aRect.left - navRect.left) - (nav.clientWidth - aRect.width)/2;
+    const max=nav.scrollWidth - nav.clientWidth;
+    const target=Math.max(0, Math.min(max, nav.scrollLeft + delta));
+    nav.scrollTo({left: target, behavior: reduceMotion ? 'auto' : 'smooth'});
+  }
+  const setActive=(id)=>{
+    let act=null;
+    links.forEach(a=>{ const on=a.getAttribute('href')==='#'+id; a.classList.toggle('is-active', on); if(on) act=a; });
+    if(act) centerActive(act);
+  };
   const io=new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting) setActive(e.target.id); });
   },{rootMargin:'-45% 0px -50% 0px', threshold:0});
